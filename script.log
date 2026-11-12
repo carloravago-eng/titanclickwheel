@@ -1,0 +1,74 @@
+music/./: 4 files pushed, 0 skipped. 40.1 MB/s (9603960 bytes in 0.228s)
+Row: 0 title=Morning_Light, artist=NULL, album=NULL, is_music=NULL, is_pending=1, duration=NULL, mime_type=audio/mpeg
+Row: 1 title=Neon_Avenue, artist=NULL, album=NULL, is_music=NULL, is_pending=1, duration=NULL, mime_type=audio/mpeg
+Row: 2 title=Paper_Planes, artist=NULL, album=NULL, is_music=NULL, is_pending=1, duration=NULL, mime_type=audio/mpeg
+Row: 3 title=Slow_River, artist=NULL, album=NULL, is_music=NULL, is_pending=1, duration=NULL, mime_type=audio/mpeg
+Performing Streamed Install
+Success
+settings.xml: 1 file pushed, 0 skipped. 0.3 MB/s (46 bytes in 0.000s)
+Success
+raw contact id: 1
+posting:
+  Notification(channel=shell_cmd shortcut=null contentView=null vibrate=null sound=null defaults=0x0 flags=0x0 color=0x00000000 vis=PRIVATE)
+posting:
+  Notification(channel=shell_cmd shortcut=null contentView=null vibrate=null sound=null defaults=0x0 flags=0x0 color=0x00000000 vis=PRIVATE)
+Night mode: no
+== shot 01-home-light
+== shot 02-sidebar-extras-preview
+== shot 03-sidebar-notifications-preview
+== shot 04-notifications
+== shot 05-all-apps
+== shot 06-options-sheet
+== shot 07-search-se
+== shot 08-search-calculator
+== shot 09-search-contact
+== shot 10-music-menu
+== shot 11a-after-shuffle
+== shot 11-now-playing
+== shot 12-home-now-playing-preview
+== shot 13-extras
+== shot 14-clock
+== shot 15-settings
+Unknown command: scroll
+Unknown command: scroll
+== shot 16-input-test
+Night mode: yes
+== shot 17-home-dark
+== shot 18-now-playing-dark
+    * HideDisplayCutout:32:35
+      * HideDisplayCutout:26:31
+      * HideDisplayCutout:18:23
+== shot 19-cutout-hole
+    * HideDisplayCutout:32:35
+      * HideDisplayCutout:26:31
+      * HideDisplayCutout:18:23
+== shot 19-cutout-corner
+total 1980
+drwxr-xr-x  2 runner runner   4096 Nov 12 11:13 .
+drwxr-xr-x 10 runner runner   4096 Nov 12 11:11 ..
+-rw-r--r--  1 runner runner  89287 Nov 12 11:11 01-home-light.png
+-rw-r--r--  1 runner runner  99182 Nov 12 11:11 02-sidebar-extras-preview.png
+-rw-r--r--  1 runner runner 146636 Nov 12 11:11 03-sidebar-notifications-preview.png
+-rw-r--r--  1 runner runner  99779 Nov 12 11:11 04-notifications.png
+-rw-r--r--  1 runner runner  84602 Nov 12 11:11 05-all-apps.png
+-rw-r--r--  1 runner runner  87116 Nov 12 11:11 06-options-sheet.png
+-rw-r--r--  1 runner runner 101890 Nov 12 11:11 07-search-se.png
+-rw-r--r--  1 runner runner  57292 Nov 12 11:11 08-search-calculator.png
+-rw-r--r--  1 runner runner  59183 Nov 12 11:12 09-search-contact.png
+-rw-r--r--  1 runner runner  59163 Nov 12 11:12 10-music-menu.png
+-rw-r--r--  1 runner runner  59163 Nov 12 11:12 11-now-playing.png
+-rw-r--r--  1 runner runner  68125 Nov 12 11:12 11a-after-shuffle.png
+-rw-r--r--  1 runner runner  90490 Nov 12 11:12 12-home-now-playing-preview.png
+-rw-r--r--  1 runner runner  47758 Nov 12 11:12 13-extras.png
+-rw-r--r--  1 runner runner  63427 Nov 12 11:12 14-clock.png
+-rw-r--r--  1 runner runner  94608 Nov 12 11:12 15-settings.png
+-rw-r--r--  1 runner runner 257768 Nov 12 11:12 16-input-test.png
+-rw-r--r--  1 runner runner  90108 Nov 12 11:12 17-home-dark.png
+-rw-r--r--  1 runner runner  59415 Nov 12 11:12 18-now-playing-dark.png
+-rw-r--r--  1 runner runner  90359 Nov 12 11:13 19-cutout-corner.png
+-rw-r--r--  1 runner runner  90108 Nov 12 11:12 19-cutout-hole.png
+-rw-r--r--  1 runner runner      0 Nov 12 11:13 crash-log.txt
+-rw-r--r--  1 runner runner  11550 Nov 12 11:13 input-log.txt
+-rw-r--r--  1 runner runner  58847 Nov 12 11:13 logcat.txt
+-rw-r--r--  1 runner runner   8181 Nov 12 11:13 media-session.txt
+-rw-r--r--  1 runner runner   1762 Nov 12 11:13 script.log

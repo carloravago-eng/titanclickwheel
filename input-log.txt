@@ -1,0 +1,133 @@
+--------- beginning of main
+11-12 11:11:29.375  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:29.674  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:29.983  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:33.148  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:33.480  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:36.495  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:11:36.495  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:39.431  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:11:40.116  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:11:40.779  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:11:40.779  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:43.825  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:11:43.825  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:44.227  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=1 char='
+11-12 11:11:44.227  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:46.567  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:11:47.220  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:11:48.495  4371  4371 D ClickWheel.Input: key KEYCODE_S rep=0 char='s' dev=Virtual
+11-12 11:11:48.517  4371  4371 D ClickWheel.Input: key KEYCODE_E rep=0 char='e' dev=Virtual
+11-12 11:11:51.637  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:51.640  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:52.274  4371  4371 D ClickWheel.Input: key KEYCODE_1 rep=0 char='1' dev=Virtual
+11-12 11:11:52.277  4371  4371 D ClickWheel.Input: key KEYCODE_2 rep=0 char='2' dev=Virtual
+11-12 11:11:52.278  4371  4371 D ClickWheel.Input: key KEYCODE_SHIFT_LEFT rep=0 shift dev=Virtual
+11-12 11:11:52.280  4371  4371 D ClickWheel.Input: key KEYCODE_8 rep=0 char='*' shift dev=Virtual
+11-12 11:11:52.282  4371  4371 D ClickWheel.Input: key KEYCODE_4 rep=0 char='4' dev=Virtual
+11-12 11:11:55.357  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:55.363  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:55.365  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:55.366  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:56.016  4371  4371 D ClickWheel.Input: key KEYCODE_S rep=0 char='s' dev=Virtual
+11-12 11:11:56.035  4371  4371 D ClickWheel.Input: key KEYCODE_A rep=0 char='a' dev=Virtual
+11-12 11:11:56.041  4371  4371 D ClickWheel.Input: key KEYCODE_M rep=0 char='m' dev=Virtual
+11-12 11:12:01.412  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.476  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.523  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.579  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.629  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.680  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.726  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.783  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.844  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.907  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:02.448  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:02.448  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:05.384  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:05.384  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:12.630  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.656  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.680  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.709  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.731  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.759  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.783  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.821  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.843  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.882  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:13.410  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:13.684  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:13.959  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:14.638  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:14.638  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:17.746  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:17.746  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:21.214  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.248  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.283  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.305  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.341  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.373  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.399  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.426  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.455  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.475  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:22.009  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:22.284  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:22.562  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:22.846  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:23.122  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:23.396  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:24.074  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:24.074  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:26.863  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.136  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.410  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.683  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.958  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:28.233  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:28.509  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:28.782  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.057  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.331  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.612  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.887  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.160  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.432  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.712  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.984  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:31.261  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:31.938  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:31.938  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:34.621  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.621  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.623  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.623  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.623  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:35.148  4371  4371 D ClickWheel.Input: touch ACTION_DOWN touchscreen v=0.00 h=0.00 s=0.00 x=700 y=1000 dev=Virtual (virtual)
+11-12 11:12:35.456  4371  4371 D ClickWheel.Input: touch up dx=0 dy=-400 drag=true
+11-12 11:12:35.986  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:38.191  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:12:40.148  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.180  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.213  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.246  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.276  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.304  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.333  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.367  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.389  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.426  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:44.126  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:44.126  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:44.748  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:44.748  4371  4371 D ClickWheel.Input: ' dev=Virtual

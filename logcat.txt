@@ -1,0 +1,400 @@
+11-12 11:11:08.449  3911  3911 D AndroidRuntime: Calling main entry com.android.commands.content.Content
+11-12 11:11:08.594  3911  3911 D AndroidRuntime: Shutting down VM
+11-12 11:11:09.199  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:09.200  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:09.201  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:09.202  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.198  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.214  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.217  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.220  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.222  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.222  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.224  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.224  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.225  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.225  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.226  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.226  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.226  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.228  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.229  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.230  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.231  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.231  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:10.934   522   574 V BackupManagerService: [UserID:0] restoreAtInstall pkg=com.orbit.clickwheel token=1 restoreSet=0
+11-12 11:11:11.082  1044  1044 D CarrierSvcBindHelper: onPackageAdded: com.orbit.clickwheel
+11-12 11:11:11.086  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_ADDED
+11-12 11:11:11.090  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_ADDED
+11-12 11:11:11.159   522   800 I SdkSandboxManager: No SDKs used. Skipping SDK data reconcilation for CallingInfo{mUid=10192, mPackageName='com.orbit.clickwheel, mAppProcessToken='null'}
+11-12 11:11:11.195   844   844 I SafetyLabelChangedBroadcastReceiver: received broadcast packageName: com.orbit.clickwheel, current user: UserHandle{0}, packageChangeEvent: NEW_INSTALL, intent user: UserHandle{0}
+11-12 11:11:11.213  1044  1358 D ImsResolver: maybeAddedImsService, packageName: com.orbit.clickwheel
+11-12 11:11:11.730  1044  1044 D CarrierSvcBindHelper: onPackageModified: com.orbit.clickwheel
+11-12 11:11:11.762  1044  1358 D ImsResolver: maybeAddedImsService, packageName: com.orbit.clickwheel
+11-12 11:11:11.775  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:11.779  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:14.639   522  1701 I ConditionProviders:  Allowing condition provider com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService (userSet: true)
+11-12 11:11:14.639   522  1701 I NotificationListeners:  Allowing notification listener com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService (userSet: true)
+11-12 11:11:14.639   522  1701 V NotificationListeners: enabling notification listener for 0: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService}
+11-12 11:11:14.639   522  1701 V NotificationListeners: binding: Intent { act=android.service.notification.NotificationListenerService cmp=com.orbit.clickwheel/.notify.NotifyService (has extras) }
+11-12 11:11:14.675   522   552 I ActivityManager: Start proc 4371:com.orbit.clickwheel/u0a192 for service {com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService}
+11-12 11:11:14.698  4371  4371 I rbit.clickwheel: Late-enabling -Xcheck:jni
+11-12 11:11:14.723  4371  4371 I rbit.clickwheel: Using CollectorTypeCC GC.
+11-12 11:11:14.724  4371  4371 W rbit.clickwheel: Unexpected CPU variant for x86: x86_64.
+11-12 11:11:14.724  4371  4371 W rbit.clickwheel: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+11-12 11:11:14.862  4372  4372 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-12 11:11:14.894  4372  4372 I AndroidRuntime: Using default boot image
+11-12 11:11:14.894  4372  4372 I AndroidRuntime: Leaving lock profiling enabled
+11-12 11:11:15.287  4372  4372 D AndroidRuntime: Calling main entry com.android.commands.content.Content
+11-12 11:11:15.477  4371  4371 W ziparchive: Unable to open '/data/app/~~VU1IbL4zgiymntU343BPVQ==/com.orbit.clickwheel-aeDdrI7fr9Uo7xjiaNFmsw==/base.dm': No such file or directory
+11-12 11:11:15.477  4371  4371 W ziparchive: Unable to open '/data/app/~~VU1IbL4zgiymntU343BPVQ==/com.orbit.clickwheel-aeDdrI7fr9Uo7xjiaNFmsw==/base.dm': No such file or directory
+11-12 11:11:15.497  4371  4371 D nativeloader: Configuring clns-6 for other apk /data/app/~~VU1IbL4zgiymntU343BPVQ==/com.orbit.clickwheel-aeDdrI7fr9Uo7xjiaNFmsw==/base.apk. target_sdk_version=35, uses_libraries=, library_path=/data/app/~~VU1IbL4zgiymntU343BPVQ==/com.orbit.clickwheel-aeDdrI7fr9Uo7xjiaNFmsw==/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/com.orbit.clickwheel
+11-12 11:11:15.531   522   535 W PackageManager: Cannot suspend package "com.orbit.clickwheel": contains the active launcher
+11-12 11:11:15.596  4371  4371 V GraphicsEnvironment: ANGLE GameManagerService for com.orbit.clickwheel: false
+11-12 11:11:15.596  4371  4371 V GraphicsEnvironment: com.orbit.clickwheel is not listed in per-application setting
+11-12 11:11:15.651   522   522 V NotificationListeners: 0 notification listener service connected: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService}
+11-12 11:11:15.657  4372  4372 D AndroidRuntime: Shutting down VM
+11-12 11:11:16.761  4435  4435 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-12 11:11:16.779  4435  4435 I AndroidRuntime: Using default boot image
+11-12 11:11:16.779  4435  4435 I AndroidRuntime: Leaving lock profiling enabled
+11-12 11:11:17.099  4435  4435 D AndroidRuntime: Calling main entry com.android.commands.content.Content
+11-12 11:11:17.111  4435  4435 D AndroidRuntime: Shutting down VM
+11-12 11:11:17.114  4435  4453 I AndroidRuntime: NOTE: attach of thread 'binder:4435_1' failed
+11-12 11:11:17.544  1454  3373 I BlockstoreStorage: Clearing Blockstore Data for package com.orbit.clickwheel [CONTEXT service_id=258 ]
+11-12 11:11:17.585  1403  3491 I FontLog : Package com.orbit.clickwheel has no metadata [CONTEXT service_id=132 ]
+11-12 11:11:18.076  4477  4477 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-12 11:11:18.082  4477  4477 I AndroidRuntime: Using default boot image
+11-12 11:11:18.082  4477  4477 I AndroidRuntime: Leaving lock profiling enabled
+11-12 11:11:18.165  4477  4477 D AndroidRuntime: Calling main entry com.android.commands.content.Content
+11-12 11:11:18.244  4477  4477 D AndroidRuntime: Shutting down VM
+11-12 11:11:18.261  1631  1631 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.orbit.clickwheel], userId:[0], reason:[package is added.].
+11-12 11:11:18.272  1631  1631 I AiAiEcho: AppFetcherImpl onPackageChanged com.orbit.clickwheel.
+11-12 11:11:18.272  1631  3131 I AiAiEcho: AppIndexer Package:[com.orbit.clickwheel] UserProfile:[0] Enabled:[true].
+11-12 11:11:18.273  1631  3131 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.orbit.clickwheel], userId:[0], reason:[package is updated.].
+11-12 11:11:19.146  4516  4516 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-12 11:11:19.153  4516  4516 I AndroidRuntime: Using default boot image
+11-12 11:11:19.153  4516  4516 I AndroidRuntime: Leaving lock profiling enabled
+11-12 11:11:19.238  4516  4516 D AndroidRuntime: Calling main entry com.android.commands.content.Content
+11-12 11:11:19.277  4516  4516 D AndroidRuntime: Shutting down VM
+11-12 11:11:20.181  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.182  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.306  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.323  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.324  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.324  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.324  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.325  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.325  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.325  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:20.450   831   865 V WindowManagerShell: Transition requested: android.os.BinderProxy@c90eaf8 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity } baseActivity=ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} topActivity=ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} origActivity=null realActivity=ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} numActivities=1 lastActiveTime=58337 supportsMultiWindow=false resizeMode=0 isResizeable=false minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@51bcbd1} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{995a636 com.orbit.clickwheel.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=false isVisibleRequested=true isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+11-12 11:11:20.467   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=0
+11-12 11:11:20.920   522  1871 D ConnectivityService: requestNetwork for uid/pid:10192/4371 activeRequest: null callbackRequest: 111 [NetworkRequest [ REQUEST id=112, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-12 11:11:20.928   522   752 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=112, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:11:20.928   522   752 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=112, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:11:20.929   522   752 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=112, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:11:20.929   522   752 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=112, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:11:20.959   477  2620 E MediaPlayerService: Couldn't open fd for content://settings/system/notification_sound
+11-12 11:11:20.964   831  4617 E MediaPlayerNative: Unable to create media player
+11-12 11:11:20.964   831  4617 V MediaPlayer: resetDrmState:  mDrmInfo=null mDrmProvisioningThread=null mPrepareDrmInProgress=false mActiveDrmScheme=false
+11-12 11:11:20.976   831  4617 V MediaPlayer: cleanDrmObj: mDrmObj=null mDrmSessionId=null
+11-12 11:11:20.991   831  4617 W RingtonePlayer: 	at android.media.MediaPlayer.nativeSetDataSource(Native Method)
+11-12 11:11:20.991   831  4617 W RingtonePlayer: 	at android.media.MediaPlayer.setDataSource(MediaPlayer.java:1226)
+11-12 11:11:20.991   831  4617 W RingtonePlayer: 	at android.media.MediaPlayer.setDataSource(MediaPlayer.java:1213)
+11-12 11:11:20.991   831  4617 W RingtonePlayer: 	at android.media.MediaPlayer.setDataSource(MediaPlayer.java:1117)
+11-12 11:11:20.991   831  4617 W RingtonePlayer: 	at android.media.MediaPlayer.setDataSource(MediaPlayer.java:1049)
+11-12 11:11:21.018   522   910 I MediaSessionStack: addSession to bottom of stack | record: com.orbit.clickwheel/ClickWheel (userId=0)
+11-12 11:11:21.027  1020  1020 V MediaPlayerList: onActiveSessionsChanged: number of controllers: 2
+11-12 11:11:21.028  1020  1020 D MediaPlayerList: onActiveSessionsChanged: controller: com.google.android.googlequicksearchbox
+11-12 11:11:21.034  1020  1020 I MediaPlayerList: sendMediaUpdate: Creating a one item queue for a player with no queue
+11-12 11:11:21.034  1020  1020 D MediaPlayerList: sendMediaUpdate state=PlaybackState {state=NONE(0), position=0, buffered position=0, speed=0.0, updated=31497, actions=2409991, custom actions=[Action:mName='Rewind 10 seconds, mIcon=2131234345, mExtras=null, Action:mName='Fast forward 30 second, mIcon=2131234125, mExtras=null, Action:mName='Skip to next episode, mIcon=2131234405, mExtras=null], active item id=-1, error=null}
+11-12 11:11:21.036  1020  1020 D MediaPlayerList: onActiveSessionsChanged: controller: com.orbit.clickwheel
+11-12 11:11:21.037  1020  1020 I MediaPlayerList: Adding wrapped media player: com.orbit.clickwheel at key: 2
+11-12 11:11:21.037  1020  1020 V MediaPlayerList: onActiveSessionsChanged: number of controllers: 2
+11-12 11:11:21.037  1020  1020 D MediaPlayerList: onActiveSessionsChanged: controller: com.google.android.googlequicksearchbox
+11-12 11:11:21.038  1020  1020 I MediaPlayerList: sendMediaUpdate: Creating a one item queue for a player with no queue
+11-12 11:11:21.039  1020  1020 D MediaPlayerList: sendMediaUpdate state=PlaybackState {state=NONE(0), position=0, buffered position=0, speed=0.0, updated=31497, actions=2409991, custom actions=[Action:mName='Rewind 10 seconds, mIcon=2131234345, mExtras=null, Action:mName='Fast forward 30 second, mIcon=2131234125, mExtras=null, Action:mName='Skip to next episode, mIcon=2131234405, mExtras=null], active item id=-1, error=null}
+11-12 11:11:21.047  4371  4625 I ClickWheel: Library loaded: 0 songs, 0 albums, 0 artists
+11-12 11:11:21.073   522  2825 D CoreBackPreview: Window{272a61a u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@446a070, mPriority=0, mIsAnimationCallback=false}
+11-12 11:11:21.077  1020  1020 D MediaPlayerList: onActiveSessionsChanged: controller: com.orbit.clickwheel
+11-12 11:11:21.077  1020  1020 I MediaPlayerList: Adding wrapped media player: com.orbit.clickwheel at key: 2
+11-12 11:11:22.147   522   541 W ziparchive: Unable to open '/data/app/~~VU1IbL4zgiymntU343BPVQ==/com.orbit.clickwheel-aeDdrI7fr9Uo7xjiaNFmsw==/base.dm': No such file or directory
+11-12 11:11:22.149   522   541 I ActivityTaskManager: Displayed com.orbit.clickwheel/.MainActivity for user 0: +1s707ms
+11-12 11:11:22.149   522   541 V WindowManager: Sent Transition #9 createdAt=11-12 11:11:20.435 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=8 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity } baseActivity=ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} topActivity=ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} origActivity=null realActivity=ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} numActivities=1 lastActiveTime=58337 supportsMultiWindow=false resizeMode=0 isResizeable=false minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{840de16 Task{9a2007f #8 type=home I=com.orbit.clickwheel/.MainActivity}}} topActivityType=2 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=ActivityInfo{24d7397 com.orbit.clickwheel.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=false isVisibleRequested=true isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+11-12 11:11:22.149   522   541 V WindowManager:     info={id=9 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{840de16 Task{9a2007f #8 type=home I=com.orbit.clickwheel/.MainActivity}}} m=OPEN f=NONE leash=Surface(name=Task=8)/@0xb7d26bb sb=Rect(0, 0 - 1440, 1440) eb=Rect(0, 0 - 1440, 1440) d=0},{WCT{RemoteToken{5293f48 Task{f234f4a #7 type=home I=com.google.android.apps.nexuslauncher/.NexusLauncherActivity}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=7)/@0xe48e95c sb=Rect(0, 0 - 1440, 1440) eb=Rect(0, 0 - 1440, 1440) d=0}]}
+11-12 11:11:22.458   522   592 I ImeTracker: com.orbit.clickwheel:8d9f9c1f: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_ALWAYS_HIDDEN_STATE
+11-12 11:11:22.458   522   592 I ImeTracker: com.orbit.clickwheel:8d9f9c1f: onCancelled at PHASE_SERVER_SHOULD_HIDE
+11-12 11:11:22.552  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, false)
+11-12 11:11:28.251   477   477 D MediaPlayerService: OMX service is not available
+11-12 11:11:28.779   831  4761 V MediaPlayer: resetDrmState:  mDrmInfo=null mDrmProvisioningThread=null mPrepareDrmInProgress=false mActiveDrmScheme=false
+11-12 11:11:28.779   831  4761 V MediaPlayer: cleanDrmObj: mDrmObj=null mDrmSessionId=null
+11-12 11:11:29.375  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:29.674  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:29.983  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:32.374   522   522 V NotificationListeners: enabling notification listener for 0: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService}
+11-12 11:11:32.374   522   522 V NotificationListeners: Not registering ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService} is already bound
+11-12 11:11:33.148  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:33.480  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:11:36.495  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:11:36.495  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:39.431  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:11:39.560  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.564  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.565  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.565  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.565  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:39.566  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:40.116  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:11:40.779  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:11:40.779  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:41.319   522   522 V NotificationListeners: enabling notification listener for 0: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService}
+11-12 11:11:41.319   522   522 V NotificationListeners: Not registering ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.notify.NotifyService} is already bound
+11-12 11:11:43.104  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.104  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.105  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.105  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.105  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.106  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.106  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.107  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:43.688  4371  4385 W rbit.clickwheel: Cleared Reference was only reachable from finalizer (only reported once)
+11-12 11:11:43.825  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:11:43.825  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:44.227  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=1 char='
+11-12 11:11:44.227  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:11:44.362  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:44.362  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:46.567  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:11:47.220  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:11:47.262  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:47.262  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:47.262  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:47.262  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:47.870   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:11:47.874   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:11:48.495  4371  4371 D ClickWheel.Input: key KEYCODE_S rep=0 char='s' dev=Virtual
+11-12 11:11:48.517  4371  4371 D ClickWheel.Input: key KEYCODE_E rep=0 char='e' dev=Virtual
+11-12 11:11:51.637  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:51.640  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:52.274  4371  4371 D ClickWheel.Input: key KEYCODE_1 rep=0 char='1' dev=Virtual
+11-12 11:11:52.277  4371  4371 D ClickWheel.Input: key KEYCODE_2 rep=0 char='2' dev=Virtual
+11-12 11:11:52.278  4371  4371 D ClickWheel.Input: key KEYCODE_SHIFT_LEFT rep=0 shift dev=Virtual
+11-12 11:11:52.280  4371  4371 D ClickWheel.Input: key KEYCODE_8 rep=0 char='*' shift dev=Virtual
+11-12 11:11:52.282  4371  4371 D ClickWheel.Input: key KEYCODE_4 rep=0 char='4' dev=Virtual
+11-12 11:11:54.578  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:54.578  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:55.357  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:55.363  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:55.365  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:55.366  4371  4371 D ClickWheel.Input: key KEYCODE_DEL rep=0 dev=Virtual
+11-12 11:11:55.959  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:55.959  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:56.016  4371  4371 D ClickWheel.Input: key KEYCODE_S rep=0 char='s' dev=Virtual
+11-12 11:11:56.035  4371  4371 D ClickWheel.Input: key KEYCODE_A rep=0 char='a' dev=Virtual
+11-12 11:11:56.041  4371  4371 D ClickWheel.Input: key KEYCODE_M rep=0 char='m' dev=Virtual
+11-12 11:11:57.642  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:57.642  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:58.995  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:11:58.995  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:00.124   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:00.125   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:00.780   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:00.782   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:01.243  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:01.243  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:01.412  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.476  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.523  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.579  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.629  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.680  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.726  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.783  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.844  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:01.907  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:02.448  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:02.448  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:02.682  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:02.683  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:05.384  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:05.384  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:05.387  4371  4371 I ClickWheel: Shuffle Songs: 0 songs, state=READY, service=true
+11-12 11:12:09.191   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:09.192   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:12.005   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:12.006   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:12.630  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.656  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.680  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.709  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.731  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.759  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.783  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.821  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.843  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:12.882  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:13.410  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:13.684  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:13.959  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:14.638  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:14.638  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:15.610  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:15.610  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:16.687  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:16.689  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:17.746  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:17.746  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:20.584   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:20.585   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:21.214  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.248  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.283  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.305  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.341  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.373  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.399  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.426  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.455  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:21.475  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:22.009  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:22.284  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:22.562  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:22.846  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:23.122  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:23.396  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:24.074  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:24.074  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:26.863  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.136  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.410  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.683  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:27.958  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:28.233  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:28.509  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:28.782  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.057  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.331  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.612  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:29.887  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.160  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.432  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.712  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:30.984  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:31.261  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:31.938  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:31.938  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:34.621  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.621  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.622  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.623  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.623  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:34.623  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:35.148  4371  4371 D ClickWheel.Input: touch ACTION_DOWN touchscreen v=0.00 h=0.00 s=0.00 x=700 y=1000 dev=Virtual (virtual)
+11-12 11:12:35.456  4371  4371 D ClickWheel.Input: touch up dx=0 dy=-400 drag=true
+11-12 11:12:35.986  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_DOWN rep=0 dev=Virtual
+11-12 11:12:38.191  4371  4371 D ClickWheel.Input: key KEYCODE_ESCAPE rep=0 dev=Virtual
+11-12 11:12:38.816   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:38.817   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:39.497  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, true)
+11-12 11:12:39.532   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:39.536   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:40.148  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.180  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.213  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.246  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.276  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.304  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.333  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.367  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.389  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:40.426  4371  4371 D ClickWheel.Input: key KEYCODE_DPAD_UP rep=0 dev=Virtual
+11-12 11:12:44.126  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:44.126  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:44.748  4371  4371 D ClickWheel.Input: key KEYCODE_ENTER rep=0 char='
+11-12 11:12:44.748  4371  4371 D ClickWheel.Input: ' dev=Virtual
+11-12 11:12:44.748  4371  4371 I ClickWheel: Shuffle Songs: 0 songs, state=READY, service=true
+11-12 11:12:48.648  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, true)
+11-12 11:12:48.696   522   596 W InputManager-JNI: Input channel object '272a61a com.orbit.clickwheel/com.orbit.clickwheel.MainActivity (client)' was disposed without first being removed with the input manager!
+11-12 11:12:48.698   522  2779 I WindowManager: setOnBackInvokedCallback(): No window state for package:com.orbit.clickwheel
+11-12 11:12:48.726  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:48.727  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:48.743   522  1871 D ConnectivityService: requestNetwork for uid/pid:10192/4371 activeRequest: null callbackRequest: 147 [NetworkRequest [ REQUEST id=148, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-12 11:12:48.772   522   752 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=148, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:48.772   522   752 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=148, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:48.772   522   752 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=148, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:48.772   522   752 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=148, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:48.813   522  3022 D CoreBackPreview: Window{2ccd1ca u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@5e5a658, mPriority=0, mIsAnimationCallback=false}
+11-12 11:12:48.843   522   978 I WindowManager: finishDrawing of relaunch: Window{2ccd1ca u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} 205ms
+11-12 11:12:48.883   522   978 I ImeTracker: com.orbit.clickwheel:54c9ea71: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_ALWAYS_HIDDEN_STATE
+11-12 11:12:48.883   522   978 I ImeTracker: com.orbit.clickwheel:54c9ea71: onCancelled at PHASE_SERVER_SHOULD_HIDE
+11-12 11:12:48.887  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, false)
+11-12 11:12:51.204  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:51.205  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:52.629   522   542 D nativeloader: Configuring clns-18 for other apk . target_sdk_version=35, uses_libraries=, library_path=/data/app/~~VU1IbL4zgiymntU343BPVQ==/com.orbit.clickwheel-aeDdrI7fr9Uo7xjiaNFmsw==/lib/x86_64, permitted_path=/data:/mnt/expand
+11-12 11:12:52.635   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:12:52.636   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:12:53.680  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:53.680  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:57.515  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, true)
+11-12 11:12:57.538   522  2256 W InputManager-JNI: Input channel object '2ccd1ca com.orbit.clickwheel/com.orbit.clickwheel.MainActivity (client)' was disposed without first being removed with the input manager!
+11-12 11:12:57.540   522  3017 I WindowManager: setOnBackInvokedCallback(): No window state for package:com.orbit.clickwheel
+11-12 11:12:57.577  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, true)
+11-12 11:12:57.588   522  1754 D ConnectivityService: requestNetwork for uid/pid:10192/4371 activeRequest: null callbackRequest: 149 [NetworkRequest [ REQUEST id=150, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-12 11:12:57.597   522   752 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=150, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.597   522   752 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=150, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.597   522   752 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=150, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.597   522   752 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=150, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.617  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:57.617  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:57.632  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:57.632  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:12:57.670   522  2825 D CoreBackPreview: Window{7e50080 u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@165bec4, mPriority=0, mIsAnimationCallback=false}
+11-12 11:12:57.701   522  1701 I WindowManager: finishDrawing of relaunch: Window{7e50080 u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} 195ms
+11-12 11:12:57.711   522  2736 D CoreBackPreview: Window{7e50080 u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}: Setting back callback null
+11-12 11:12:57.721   522  2736 W InputManager-JNI: Input channel object '7e50080 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity (client)' was disposed without first being removed with the input manager!
+11-12 11:12:57.752   522  3222 D ConnectivityService: requestNetwork for uid/pid:10192/4371 activeRequest: null callbackRequest: 151 [NetworkRequest [ REQUEST id=152, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-12 11:12:57.754   522   752 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=152, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.754   522   752 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=152, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.755   522   752 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=152, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.755   522   752 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=152, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:12:57.812   522  2825 D CoreBackPreview: Window{95598df u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@e34849a, mPriority=0, mIsAnimationCallback=false}
+11-12 11:12:57.860   522  2256 I ImeTracker: com.orbit.clickwheel:6cadba1b: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_ALWAYS_HIDDEN_STATE
+11-12 11:12:57.860   522  2256 I ImeTracker: com.orbit.clickwheel:6cadba1b: onCancelled at PHASE_SERVER_SHOULD_HIDE
+11-12 11:12:57.862  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, false)
+11-12 11:13:01.548   522   542 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.HOME] flg=0x10000100 cmp=com.orbit.clickwheel/.MainActivity (has extras)} with LAUNCH_SINGLE_TASK from uid 0 (BAL_ALLOW_ALLOWLISTED_UID) result code=3
+11-12 11:13:01.549   831   865 D WindowManagerShell: onActivityRestartAttempt: ComponentInfo{com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}
+11-12 11:13:03.688  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:13:03.688  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:13:06.378  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, true)
+11-12 11:13:06.405   522  2736 D CoreBackPreview: Window{95598df u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}: Setting back callback null
+11-12 11:13:06.405   522  1871 W InputManager-JNI: Input channel object '95598df com.orbit.clickwheel/com.orbit.clickwheel.MainActivity (client)' was disposed without first being removed with the input manager!
+11-12 11:13:06.439  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:13:06.439  1020  1020 V MediaPlayerList: mPackageChangedBroadcastReceiver: action: android.intent.action.PACKAGE_CHANGED
+11-12 11:13:06.458   522  2736 D ConnectivityService: requestNetwork for uid/pid:10192/4371 activeRequest: null callbackRequest: 154 [NetworkRequest [ REQUEST id=155, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]] callback flags: 0 order: 2147483647
+11-12 11:13:06.476   522   752 D WifiNetworkFactory: got request NetworkRequest [ REQUEST id=155, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:13:06.476   522   752 D UntrustedWifiNetworkFactory: got request NetworkRequest [ REQUEST id=155, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:13:06.476   522   752 D OemPaidWifiNetworkFactory: got request NetworkRequest [ REQUEST id=155, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:13:06.476   522   752 D MultiInternetWifiNetworkFactory: got request NetworkRequest [ REQUEST id=155, [ Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VCN_MANAGED Uid: 10192 RequestorUid: 10192 RequestorPkg: com.orbit.clickwheel UnderlyingNetworks: Null] ]
+11-12 11:13:06.535   522  1536 D CoreBackPreview: Window{6270456 u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@ce499c4, mPriority=0, mIsAnimationCallback=false}
+11-12 11:13:06.579   522   818 I WindowManager: finishDrawing of relaunch: Window{6270456 u0 com.orbit.clickwheel/com.orbit.clickwheel.MainActivity} 197ms
+11-12 11:13:06.620   522  2779 I ImeTracker: com.orbit.clickwheel:db468c7c: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_ALWAYS_HIDDEN_STATE
+11-12 11:13:06.620   522  2779 I ImeTracker: com.orbit.clickwheel:db468c7c: onCancelled at PHASE_SERVER_SHOULD_HIDE
+11-12 11:13:06.640  1541  1541 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.orbit.clickwheel fieldId=0 fieldName=null extras=null}, false)
