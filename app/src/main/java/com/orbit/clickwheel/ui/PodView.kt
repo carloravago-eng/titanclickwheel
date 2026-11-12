@@ -2,8 +2,11 @@ package com.orbit.clickwheel.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Rect
 import android.graphics.RectF
 import android.os.SystemClock
 import android.view.InputDevice
@@ -11,19 +14,29 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
+import android.view.WindowInsets
 import com.orbit.clickwheel.Prefs
+import com.orbit.clickwheel.apps.AppEntry
+import com.orbit.clickwheel.launcher.SidebarStore
 import com.orbit.clickwheel.library.Track
+import com.orbit.clickwheel.playback.MediaHub
 import com.orbit.clickwheel.playback.PlaybackService
+import com.orbit.clickwheel.ui.screens.Action
+import com.orbit.clickwheel.ui.screens.NowPlayingScreen
+import com.orbit.clickwheel.ui.screens.Screen
+import com.orbit.clickwheel.ui.screens.SearchScreen
+import com.orbit.clickwheel.ui.screens.SheetScreen
+import com.orbit.clickwheel.ui.screens.SidebarScreen
 import kotlin.math.abs
 import kotlin.math.max
 
 /**
- * The whole "screen" of the player, drawn on a Canvas.
+ * The whole launcher, drawn on a Canvas: status bar, a stack of screens with slide transitions,
+ * and an options sheet on top.
  *
- * Every input source is reduced to five actions: wheel ticks, select, menu, play/pause and
- * previous/next. Wheel ticks can come from the Titan's touch-sensitive keyboard (delivered
- * either as scroll events or as a touchpad), from arrow keys, from dragging on the screen,
- * or from the optional on-screen click wheel.
+ * Every input source is reduced to a few actions: wheel ticks, select, options, menu, play/pause
+ * and previous/next. Wheel ticks come from the Titan's touch-sensitive keyboard (scroll events,
+ * a touchpad, or injected touches), arrow keys, dragging on the screen, or the on-screen wheel.
  */
 @SuppressLint("ViewConstructor")
 class PodView(context: Context, private val host: Host) : View(context) {
@@ -31,36 +44,59 @@ class PodView(context: Context, private val host: Host) : View(context) {
     interface Host {
         val service: PlaybackService?
         val prefs: Prefs
-        val battery: Int
-        val charging: Boolean
+        val status: SystemStatus
+        val sidebar: SidebarStore
+        val hasContactsPermission: Boolean
         fun click()
         fun applyWheelVisibility()
+        fun applyTheme()
         fun requestLibraryAccess()
         fun rescanLibrary()
+        fun requestContactsPermission()
+        fun openNotificationAccess()
+        fun openHomeSettings()
+        fun launch(app: AppEntry)
+        fun startIntent(intent: Intent, quiet: Boolean): Boolean
     }
 
-    var skin = Skin(context, host.prefs.textSize)
+    var skin = makeSkin()
         private set
     val service: PlaybackService? get() = host.service
     val prefs: Prefs get() = host.prefs
+    val sidebar: SidebarStore get() = host.sidebar
+    val hasContactsPermission: Boolean get() = host.hasContactsPermission
 
     private val stack = ArrayList<Screen>()
     val top: Screen get() = stack.last()
+    private var sheet: SheetScreen? = null
+    private val target: Screen get() = sheet ?: top
 
     // Slide transition between screens.
     private var transFrom: Screen? = null
     private var transStart = 0L
     private var transDir = 1
-    private val transDuration = 230L
+    private val transDuration = 240L
 
-    // Big-letter overlay shown while flicking through long lists.
+    // Overlays.
     private var letter: String? = null
     private var letterUntil = 0L
+    private var flashText: String? = null
+    private var flashUntil = 0L
 
-    // Fractional wheel movement waiting to become whole ticks.
+    // Status bar and camera cutout.
+    private val statusBar = StatusBarRenderer()
+    private var cutouts: List<Rect> = emptyList()
+    private var safeTop = 0
+    val barH: Float get() = max(safeTop.toFloat(), skin.statusMinH)
+
+    // Wheel accumulation.
     private var wheelAcc = 0f
     private val tickTimes = LongArray(64)
     private var tickHead = 0
+
+    // Keys.
+    private var enterPending = false
+    private var altHeld = false
 
     // Touch tracking.
     private val slop = ViewConfiguration.get(context).scaledTouchSlop
@@ -70,7 +106,17 @@ class PodView(context: Context, private val host: Host) : View(context) {
     private var dragging = false
     private var horizontal = false
     private var injected = false
+    private var longPressed = false
     private var padLastY = Float.NaN
+    private val longPress = Runnable {
+        if (!dragging && !horizontal && !injected) {
+            longPressed = true
+            finishTransition()
+            val y = downY - contentTop(top)
+            if (sheet == null && y >= 0) top.onLongTap(downX, y)
+            invalidate()
+        }
+    }
 
     private val frameTick = Runnable { invalidate() }
     private val rect = RectF()
@@ -78,8 +124,32 @@ class PodView(context: Context, private val host: Host) : View(context) {
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        stack += Menus.main(this)
+        stack += SidebarScreen(this)
         top.onResume()
+    }
+
+    private fun makeSkin(): Skin {
+        val dark = when (host.prefs.theme) {
+            1 -> false
+            2 -> true
+            else -> (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        }
+        val accent = Accents.color(host.prefs.accent)
+        return Skin(context, host.prefs.textSize, if (dark) Palette.dark(accent) else Palette.light(accent))
+    }
+
+    fun rebuildSkin() {
+        skin = makeSkin()
+        stack.forEach { it.onDataChanged() }
+        invalidate()
+    }
+
+    override fun onApplyWindowInsets(insets: WindowInsets): WindowInsets {
+        val cut = insets.displayCutout
+        cutouts = cut?.boundingRects.orEmpty()
+        safeTop = cut?.safeInsetTop ?: 0
+        invalidate()
+        return super.onApplyWindowInsets(insets)
     }
 
     // ---------------------------------------------------------------- navigation
@@ -95,25 +165,33 @@ class PodView(context: Context, private val host: Host) : View(context) {
     fun pop(): Boolean {
         if (stack.size <= 1) return false
         finishTransition()
-        transFrom = stack.removeAt(stack.lastIndex)
+        val leaving = stack.removeAt(stack.lastIndex)
+        leaving.onLeave()
+        transFrom = leaving
         top.onResume()
         startTransition(-1)
         return true
     }
 
     fun home() {
-        if (stack.size <= 1) return
+        closeSheet()
+        if (stack.size <= 1) {
+            top.onResume()
+            invalidate()
+            return
+        }
         finishTransition()
         transFrom = top
-        while (stack.size > 1) stack.removeAt(stack.lastIndex)
+        while (stack.size > 1) stack.removeAt(stack.lastIndex).onLeave()
         top.onResume()
         startTransition(-1)
     }
 
     fun showNowPlaying() {
         if (top is NowPlayingScreen) return
-        stack.indexOfFirst { it is NowPlayingScreen }.takeIf { it >= 0 }?.let { i ->
-            while (stack.size > i + 1) stack.removeAt(stack.lastIndex)
+        val i = stack.indexOfFirst { it is NowPlayingScreen }
+        if (i >= 0) {
+            while (stack.size > i + 1) stack.removeAt(stack.lastIndex).onLeave()
             top.onResume()
             invalidate()
             return
@@ -121,10 +199,33 @@ class PodView(context: Context, private val host: Host) : View(context) {
         push(NowPlayingScreen(this))
     }
 
+    fun openSearch(initial: String) {
+        val t = top
+        if (t is SearchScreen) {
+            t.append(initial)
+            invalidate()
+        } else {
+            push(SearchScreen(this, initial))
+        }
+    }
+
     fun playFrom(tracks: List<Track>, index: Int) {
         val svc = service ?: return
         svc.playQueue(tracks, index)
         push(NowPlayingScreen(this))
+    }
+
+    fun showSheet(title: String, actions: List<Action>) {
+        if (actions.isEmpty()) return
+        val s = SheetScreen(this, title, actions)
+        s.onResume()
+        sheet = s
+        invalidate()
+    }
+
+    fun closeSheet() {
+        sheet = null
+        invalidate()
     }
 
     private fun startTransition(dir: Int) {
@@ -137,34 +238,39 @@ class PodView(context: Context, private val host: Host) : View(context) {
         transFrom = null
     }
 
-    fun rebuildSkin() {
-        skin = Skin(context, prefs.textSize)
+    /** Library, apps, notifications, playback or sidebar changed. */
+    fun onDataChanged() {
+        stack.forEach { it.onDataChanged() }
         invalidate()
     }
 
-    fun onLibraryChanged() {
-        stack.forEach { if (it is MenuScreen) it.refresh() }
-        invalidate()
-    }
-
-    fun onPlaybackChanged() {
-        stack.forEach { it.onPlaybackChanged() }
-        (stack.first() as? MenuScreen)?.refresh()
-        invalidate()
-    }
-
-    // ---------------------------------------------------------------- actions
+    // ---------------------------------------------------------------- host passthrough
 
     fun click() = host.click()
     fun applyWheelVisibility() = host.applyWheelVisibility()
+    fun applyTheme() = host.applyTheme()
     fun requestLibraryAccess() = host.requestLibraryAccess()
     fun rescanLibrary() = host.rescanLibrary()
+    fun requestContactsPermission() = host.requestContactsPermission()
+    fun openNotificationAccess() = host.openNotificationAccess()
+    fun openHomeSettings() = host.openHomeSettings()
+    fun launch(app: AppEntry) = host.launch(app)
+    fun startIntent(intent: Intent, quiet: Boolean = false): Boolean = host.startIntent(intent, quiet)
 
     fun showLetter(s: String) {
         letter = s
         letterUntil = SystemClock.uptimeMillis() + 650
         invalidate()
     }
+
+    /** A short message at the bottom of the screen. */
+    fun flash(s: String) {
+        flashText = s
+        flashUntil = SystemClock.uptimeMillis() + 1800
+        invalidate()
+    }
+
+    // ---------------------------------------------------------------- actions
 
     /** Whole ticks from any wheel-like source. */
     fun wheel(ticks: Int) {
@@ -175,7 +281,8 @@ class PodView(context: Context, private val host: Host) : View(context) {
             tickTimes[tickHead] = now
             tickHead = (tickHead + 1) % tickTimes.size
         }
-        top.onWheel(ticks)
+        val t = target
+        if (!(altHeld && t.onMoveWheel(ticks))) t.onWheel(ticks)
         invalidate()
     }
 
@@ -198,12 +305,22 @@ class PodView(context: Context, private val host: Host) : View(context) {
 
     fun select() {
         finishTransition()
-        top.onSelect()
+        target.onSelect()
+        invalidate()
+    }
+
+    fun options() {
+        finishTransition()
+        if (sheet == null && top.onContext()) click()
         invalidate()
     }
 
     fun menu(): Boolean {
         finishTransition()
+        if (sheet != null) {
+            closeSheet()
+            return true
+        }
         if (top.onMenu()) {
             invalidate()
             return true
@@ -212,25 +329,31 @@ class PodView(context: Context, private val host: Host) : View(context) {
     }
 
     fun playPause() {
-        service?.toggle()
+        val p = MediaHub.current
+        if (p != null) p.toggle() else service?.toggle()
         invalidate()
     }
 
     fun next() {
-        service?.next()
+        MediaHub.current?.next()
         invalidate()
     }
 
     fun previous() {
-        service?.previous()
+        MediaHub.current?.previous()
         invalidate()
     }
 
     // ---------------------------------------------------------------- keyboard
 
     /** Returns true when the key was used. */
-    fun onKey(keyCode: Int, event: KeyEvent): Boolean {
-        if (top.onKey(keyCode, event)) {
+    fun handleKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_ALT_LEFT || keyCode == KeyEvent.KEYCODE_ALT_RIGHT) {
+            altHeld = true
+            return false
+        }
+        val t = target
+        if (t.onKey(keyCode, event)) {
             invalidate()
             return true
         }
@@ -241,7 +364,15 @@ class PodView(context: Context, private val host: Host) : View(context) {
             KeyEvent.KEYCODE_PAGE_DOWN -> wheel(8)
             KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
                 if (event.repeatCount == 0) {
-                    if (event.isShiftPressed || event.isAltPressed) showNowPlaying() else select()
+                    when {
+                        event.isShiftPressed -> { closeSheet(); showNowPlaying() }
+                        event.isAltPressed -> options()
+                        else -> enterPending = true
+                    }
+                } else if (enterPending) {
+                    // Held: show options instead of selecting.
+                    enterPending = false
+                    options()
                 }
             }
             KeyEvent.KEYCODE_DEL, KeyEvent.KEYCODE_ESCAPE -> {
@@ -253,18 +384,35 @@ class PodView(context: Context, private val host: Host) : View(context) {
             }
             KeyEvent.KEYCODE_SPACE, KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE, KeyEvent.KEYCODE_HEADSETHOOK ->
                 if (event.repeatCount == 0) playPause()
-            KeyEvent.KEYCODE_MEDIA_PLAY -> if (service?.isPlaying == false) playPause()
-            KeyEvent.KEYCODE_MEDIA_PAUSE -> if (service?.isPlaying == true) playPause()
+            KeyEvent.KEYCODE_MEDIA_PLAY -> if (MediaHub.current?.isPlaying != true) playPause()
+            KeyEvent.KEYCODE_MEDIA_PAUSE -> if (MediaHub.current?.isPlaying == true) playPause()
             KeyEvent.KEYCODE_DPAD_RIGHT, KeyEvent.KEYCODE_MEDIA_NEXT -> if (event.repeatCount == 0) next()
             KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_MEDIA_PREVIOUS -> if (event.repeatCount == 0) previous()
             else -> {
                 val ch = event.unicodeChar
-                if (ch == 0 || event.repeatCount > 0) return false
-                if (!top.onChar(ch.toChar())) return false
+                if (ch == 0 || event.repeatCount > 0 || Character.isISOControl(ch)) return false
+                if (!t.onChar(ch.toChar())) {
+                    if (sheet != null || ch == ' '.code) return false
+                    openSearch(String(Character.toChars(ch)))
+                }
             }
         }
         invalidate()
         return true
+    }
+
+    fun handleKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        when (keyCode) {
+            KeyEvent.KEYCODE_ALT_LEFT, KeyEvent.KEYCODE_ALT_RIGHT -> altHeld = false
+            KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER, KeyEvent.KEYCODE_DPAD_CENTER -> {
+                if (enterPending) {
+                    enterPending = false
+                    select()
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     // ---------------------------------------------------------------- touch-keyboard / touchpad / mouse
@@ -303,6 +451,8 @@ class PodView(context: Context, private val host: Host) : View(context) {
 
     // ---------------------------------------------------------------- screen touch
 
+    private fun contentTop(s: Screen) = barH + if (s.showHeader) skin.headerH else 0f
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.actionMasked) {
@@ -312,9 +462,11 @@ class PodView(context: Context, private val host: Host) : View(context) {
                 lastY = e.y
                 dragging = false
                 horizontal = false
+                longPressed = false
                 // Keyboard swipes may be injected as touches by the system's scroll assistant;
                 // those must only ever scroll, never "tap" whatever row is under them.
                 injected = e.deviceId <= 0 || e.device?.isVirtual == true
+                if (!injected) postDelayed(longPress, ViewConfiguration.getLongPressTimeout().toLong())
             }
             MotionEvent.ACTION_MOVE -> {
                 val dx = e.x - downX
@@ -323,8 +475,10 @@ class PodView(context: Context, private val host: Host) : View(context) {
                     if (abs(dy) > slop && abs(dy) >= abs(dx)) {
                         dragging = true
                         lastY = e.y
+                        removeCallbacks(longPress)
                     } else if (abs(dx) > slop) {
                         horizontal = true
+                        removeCallbacks(longPress)
                     }
                 }
                 if (dragging) {
@@ -334,21 +488,35 @@ class PodView(context: Context, private val host: Host) : View(context) {
                 }
             }
             MotionEvent.ACTION_UP -> {
+                removeCallbacks(longPress)
                 when {
-                    horizontal -> if (!injected && e.x - downX > width * 0.2f) menu()
+                    longPressed -> {}
+                    horizontal -> if (!injected && sheet == null && e.x - downX > width * 0.2f) menu()
                     !dragging && !injected -> {
-                        if (e.y < skin.titleH) menu()
-                        else {
-                            finishTransition()
-                            top.onTap(e.x, e.y - skin.titleH)
-                        }
+                        tap(e.x, e.y)
                         performClick()
                     }
                 }
                 invalidate()
             }
+            MotionEvent.ACTION_CANCEL -> removeCallbacks(longPress)
         }
         return true
+    }
+
+    private fun tap(x: Float, y: Float) {
+        finishTransition()
+        val sh = sheet
+        if (sh != null) {
+            if (!sh.tapCard(x, y)) closeSheet()
+            return
+        }
+        val t = top
+        when {
+            y < barH -> {}
+            t.showHeader && y < barH + skin.headerH -> menu()
+            else -> t.onTap(x, y - contentTop(t))
+        }
     }
 
     override fun performClick(): Boolean {
@@ -362,12 +530,7 @@ class PodView(context: Context, private val host: Host) : View(context) {
         val s = skin
         val w = width.toFloat()
         val now = SystemClock.uptimeMillis()
-        canvas.drawColor(s.white)
-
-        // Title bar background.
-        s.fill.shader = s.titleShader
-        canvas.drawRect(0f, 0f, w, s.titleH, s.fill)
-        s.fill.shader = null
+        canvas.drawColor(s.p.bg)
 
         val from = transFrom
         if (from != null) {
@@ -377,42 +540,70 @@ class PodView(context: Context, private val host: Host) : View(context) {
                 transFrom = null
                 drawScreen(canvas, top, 0f, now)
             } else if (transDir > 0) {
-                drawScreen(canvas, from, -p * w, now)
-                drawScreen(canvas, top, (1f - p) * w, now)
+                drawScreen(canvas, from, -p * w * 0.3f, now)
+                drawScreen(canvas, top, (1f - p) * w, now, shadow = true)
             } else {
-                drawScreen(canvas, from, p * w, now)
-                drawScreen(canvas, top, -(1f - p) * w, now)
+                drawScreen(canvas, top, -(1f - p) * w * 0.3f, now)
+                drawScreen(canvas, from, p * w, now, shadow = true)
             }
         } else {
             drawScreen(canvas, top, 0f, now)
         }
 
-        // Title bar chrome drawn on top so it never slides.
-        s.stroke.color = 0xFF8E8E93.toInt()
-        s.stroke.strokeWidth = 1f * s.u
-        canvas.drawLine(0f, s.titleH - 0.5f, w, s.titleH - 0.5f, s.stroke)
-        service?.takeIf { it.current != null }?.let { svc ->
-            s.playIcon(canvas, s.pad * 0.9f, s.titleH / 2f, s.titleH * 0.36f, svc.isPlaying)
-        }
-        s.battery(canvas, w - s.pad * 0.6f, s.titleH / 2f, host.battery, host.charging)
+        val player = MediaHub.current
+        statusBar.draw(canvas, s, host.status, width, barH, cutouts, player?.isPlaying)
 
+        sheet?.let { sh ->
+            s.fill.color = if (s.p.dark) 0x80000000.toInt() else 0x47000000
+            canvas.drawRect(0f, 0f, w, height.toFloat(), s.fill)
+            sh.layoutCard(width, height, barH)
+            sh.drawCard(canvas, now)
+        }
         drawLetter(canvas, now)
+        drawFlash(canvas, now)
         scheduleFrame(now)
     }
 
-    private fun drawScreen(canvas: Canvas, screen: Screen, x: Float, now: Long) {
+    private fun drawScreen(canvas: Canvas, screen: Screen, x: Float, now: Long, shadow: Boolean = false) {
         val s = skin
         canvas.save()
         canvas.translate(x, 0f)
-        val reserve = 48 * s.u
-        val t = s.ellipsize(screen.title, s.titleText, width - reserve * 2)
-        s.titleText.textAlign = Paint.Align.CENTER
-        canvas.drawText(t, width / 2f, s.baseline(s.titleText, 0f, s.titleH), s.titleText)
-        s.titleText.textAlign = Paint.Align.LEFT
-        canvas.clipRect(0f, s.titleH, width.toFloat(), height.toFloat())
-        canvas.translate(0f, s.titleH)
-        screen.draw(canvas, width, (height - s.titleH).toInt(), now)
+        if (shadow && x > 0f) {
+            s.fill.color = 0x22000000
+            canvas.drawRect(-6 * s.u, 0f, 0f, height.toFloat(), s.fill)
+        }
+        canvas.clipRect(0f, 0f, width.toFloat(), height.toFloat())
+        screen.drawBackground(canvas, width, height)
+        canvas.translate(0f, barH)
+        var contentH = height - barH
+        if (screen.showHeader) {
+            drawHeader(canvas, screen)
+            canvas.translate(0f, s.headerH)
+            contentH -= s.headerH
+        }
+        canvas.clipRect(0f, 0f, width.toFloat(), contentH)
+        screen.draw(canvas, width, contentH.toInt(), now)
         canvas.restore()
+    }
+
+    private fun drawHeader(canvas: Canvas, screen: Screen) {
+        val s = skin
+        val h = s.headerH
+        s.backChevron(canvas, s.pad * 1.2f, h / 2f, s.p.accent)
+        val detail = screen.headerDetail
+        var right = width - s.pad * 1.3f
+        if (detail != null) {
+            s.detailText.textAlign = Paint.Align.RIGHT
+            s.detailText.color = s.p.secondary
+            val dw = minOf(s.detailText.measureText(detail), width * 0.35f)
+            canvas.drawText(s.ellipsize(detail, s.detailText, dw + 1), right, s.baseline(s.detailText, 0f, h), s.detailText)
+            s.detailText.textAlign = Paint.Align.LEFT
+            right -= dw + s.pad
+        }
+        val tx = s.pad * 1.2f + h * 0.32f
+        s.headerText.color = s.p.text
+        canvas.drawText(s.ellipsize(screen.title, s.headerText, right - tx), tx, s.baseline(s.headerText, 0f, h), s.headerText)
+        s.hairline(canvas, 0f, h - 0.5f, width.toFloat(), h - 0.5f)
     }
 
     private fun drawLetter(canvas: Canvas, now: Long) {
@@ -424,33 +615,50 @@ class PodView(context: Context, private val host: Host) : View(context) {
         val s = skin
         val size = 96 * s.u
         val cx = width / 2f
-        val cy = s.titleH + (height - s.titleH) / 2f
+        val cy = barH + (height - barH) / 2f
         rect.set(cx - size / 2, cy - size / 2, cx + size / 2, cy + size / 2)
         s.fill.color = 0xB0202022.toInt()
-        canvas.drawRoundRect(rect, 14 * s.u, 14 * s.u, s.fill)
-        s.letterText.color = s.white
+        canvas.drawRoundRect(rect, 18 * s.u, 18 * s.u, s.fill)
+        s.letterText.color = 0xFFFFFFFF.toInt()
         canvas.drawText(l, cx, s.baseline(s.letterText, rect.top, size), s.letterText)
+    }
+
+    private fun drawFlash(canvas: Canvas, now: Long) {
+        val t = flashText ?: return
+        if (now > flashUntil) {
+            flashText = null
+            return
+        }
+        val s = skin
+        val tw = s.bodyText.measureText(t)
+        val h = s.rowH
+        val w = minOf(tw + s.pad * 3, width - s.pad * 2)
+        rect.set((width - w) / 2, height - h - s.pad * 2, (width + w) / 2, height - s.pad * 2)
+        s.fill.color = if (s.p.dark) 0xF03A3A3C.toInt() else 0xF0222224.toInt()
+        canvas.drawRoundRect(rect, h / 2, h / 2, s.fill)
+        s.bodyText.color = 0xFFFFFFFF.toInt()
+        s.bodyText.textAlign = Paint.Align.CENTER
+        canvas.drawText(s.ellipsize(t, s.bodyText, w - s.pad * 2), rect.centerX(), s.baseline(s.bodyText, rect.top, h), s.bodyText)
+        s.bodyText.textAlign = Paint.Align.LEFT
+        s.bodyText.color = s.p.text
     }
 
     private fun scheduleFrame(now: Long) {
         removeCallbacks(frameTick)
-        val screenDelay = top.nextFrameDelay(now)
-        val delay = when {
-            transFrom != null -> 0L
-            letter != null -> {
-                val l = max(0L, letterUntil - now + 1)
-                if (screenDelay >= 0) minOf(l, screenDelay) else l
-            }
-            else -> screenDelay
-        }
-        when {
-            delay == 0L -> postInvalidateOnAnimation()
-            delay > 0L -> postDelayed(frameTick, delay)
-        }
+        val delays = listOfNotNull(
+            if (transFrom != null) 0L else null,
+            letter?.let { max(0L, letterUntil - now + 1) },
+            flashText?.let { max(0L, flashUntil - now + 1) },
+            sheet?.nextFrameDelay(now)?.takeIf { it >= 0 },
+            top.nextFrameDelay(now).takeIf { it >= 0 },
+        )
+        val delay = delays.minOrNull() ?: return
+        if (delay == 0L) postInvalidateOnAnimation() else postDelayed(frameTick, delay)
     }
 
     override fun onDetachedFromWindow() {
         removeCallbacks(frameTick)
+        removeCallbacks(longPress)
         super.onDetachedFromWindow()
     }
 }

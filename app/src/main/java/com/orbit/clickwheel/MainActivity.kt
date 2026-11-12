@@ -2,16 +2,16 @@ package com.orbit.clickwheel
 
 import android.Manifest
 import android.app.Activity
-import android.content.BroadcastReceiver
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.net.Uri
-import android.os.BatteryManager
+import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.provider.Settings
@@ -22,11 +22,18 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.LinearLayout
+import com.orbit.clickwheel.apps.AppEntry
+import com.orbit.clickwheel.apps.Apps
+import com.orbit.clickwheel.launcher.SidebarStore
 import com.orbit.clickwheel.library.ArtCache
 import com.orbit.clickwheel.library.Library
+import com.orbit.clickwheel.notify.NotifyService
+import com.orbit.clickwheel.notify.NotifyStore
+import com.orbit.clickwheel.playback.MediaHub
 import com.orbit.clickwheel.playback.PlaybackService
 import com.orbit.clickwheel.ui.ClickWheelView
 import com.orbit.clickwheel.ui.PodView
+import com.orbit.clickwheel.ui.SystemStatus
 import kotlin.concurrent.thread
 
 class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackService.Listener {
@@ -35,48 +42,47 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
         private set
     override lateinit var prefs: Prefs
         private set
-    override var battery = 100
+    override lateinit var status: SystemStatus
         private set
-    override var charging = false
+    override lateinit var sidebar: SidebarStore
         private set
+    override val hasContactsPermission: Boolean
+        get() = checkSelfPermission(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
 
+    private lateinit var root: LinearLayout
     private lateinit var pod: PodView
     private lateinit var wheel: ClickWheelView
     private lateinit var sound: ClickSound
     private var bound = false
-    private var askedPermission = false
+    private var askedAudio = false
+    private var askedContacts = false
     private val handledKeys = HashSet<Int>()
 
-    private val batteryReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-            val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, 100)
-            if (level >= 0 && scale > 0) battery = level * 100 / scale
-            val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
-            charging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
-            if (::pod.isInitialized) pod.invalidate()
-        }
-    }
+    private val dataListener: () -> Unit = { if (::pod.isInitialized) pod.onDataChanged() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefs = Prefs(this)
+        sidebar = SidebarStore(prefs)
         sound = ClickSound(this)
+        status = SystemStatus(this) { if (::pod.isInitialized) pod.invalidate() }
+        Apps.init(this)
 
         pod = PodView(this, this)
         wheel = ClickWheelView(this, pod)
-        val root = LinearLayout(this).apply {
+        root = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
-            setBackgroundColor(0xFF000000.toInt())
             addView(pod, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.1f))
             addView(wheel, LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, 1f))
+            // Draw edge to edge: the top bar is ours, only keep clear of the navigation bar.
             setOnApplyWindowInsetsListener { v, insets ->
-                val bars = insets.getInsets(WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout())
-                v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
-                WindowInsets.CONSUMED
+                val nav = insets.getInsets(WindowInsets.Type.navigationBars())
+                v.setPadding(nav.left, 0, nav.right, nav.bottom)
+                insets
             }
         }
         setContentView(root)
+        applyTheme()
         applyWheelVisibility()
         pod.requestFocus()
         ensureLibrary()
@@ -87,21 +93,31 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
         val intent = Intent(this, PlaybackService::class.java)
         startService(intent)
         bound = bindService(intent, this, Context.BIND_AUTO_CREATE)
-        registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        status.start()
+        Apps.addListener(dataListener)
+        NotifyStore.addListener(dataListener)
+        MediaHub.addListener(dataListener)
+        MediaHub.start(this, ComponentName(this, NotifyService::class.java))
+        Apps.reload()
     }
 
     override fun onResume() {
         super.onResume()
-        // Permission may have been granted from system settings while we were away.
+        // Permissions may have been granted from system settings while we were away.
         if (Library.state == Library.State.NEEDS_PERMISSION && hasAudioPermission()) loadLibrary()
+        pod.onDataChanged()
     }
 
     override fun onStop() {
+        Apps.removeListener(dataListener)
+        NotifyStore.removeListener(dataListener)
+        MediaHub.removeListener(dataListener)
+        status.stop()
         service?.removeListener(this)
         service = null
+        MediaHub.internalService = null
         if (bound) unbindService(this)
         bound = false
-        unregisterReceiver(batteryReceiver)
         super.onStop()
     }
 
@@ -110,11 +126,17 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
         super.onDestroy()
     }
 
+    /** The Home button while we are already the home screen: back to the sidebar. */
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        if (intent.action == Intent.ACTION_MAIN) pod.home()
+    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
             window.insetsController?.let {
-                it.hide(WindowInsets.Type.systemBars())
+                it.hide(WindowInsets.Type.statusBars())
                 it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
             }
         }
@@ -122,6 +144,7 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        applyTheme()
         applyWheelVisibility()
     }
 
@@ -132,71 +155,67 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
         service = svc
         svc.addListener(this)
         svc.restoreState()
-        pod.onPlaybackChanged()
+        MediaHub.internalService = svc
+        pod.onDataChanged()
     }
 
     override fun onServiceDisconnected(name: ComponentName?) {
         service = null
+        MediaHub.internalService = null
     }
 
-    override fun onPlaybackChanged() = pod.onPlaybackChanged()
+    override fun onPlaybackChanged() = MediaHub.changed()
 
     // ---------------------------------------------------------------- library & permissions
 
-    private val audioPermission = Manifest.permission.READ_MEDIA_AUDIO
-
     private fun hasAudioPermission() = checkSelfPermission(
-        if (android.os.Build.VERSION.SDK_INT >= 33) audioPermission else Manifest.permission.READ_EXTERNAL_STORAGE
+        if (Build.VERSION.SDK_INT >= 33) Manifest.permission.READ_MEDIA_AUDIO else Manifest.permission.READ_EXTERNAL_STORAGE
     ) == PackageManager.PERMISSION_GRANTED
 
     private fun ensureLibrary() {
         if (hasAudioPermission()) {
             if (Library.state == Library.State.NEEDS_PERMISSION) loadLibrary()
         } else {
-            askPermissions()
+            askAudio()
         }
     }
 
-    private fun askPermissions() {
-        askedPermission = true
-        val perms = if (android.os.Build.VERSION.SDK_INT >= 33) {
-            arrayOf(audioPermission, Manifest.permission.POST_NOTIFICATIONS)
+    private fun askAudio() {
+        askedAudio = true
+        val perms = if (Build.VERSION.SDK_INT >= 33) {
+            arrayOf(Manifest.permission.READ_MEDIA_AUDIO, Manifest.permission.POST_NOTIFICATIONS)
         } else {
             arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-        requestPermissions(perms, 1)
+        requestPermissions(perms, REQ_AUDIO)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (hasAudioPermission()) loadLibrary() else pod.onLibraryChanged()
+        if (requestCode == REQ_AUDIO && hasAudioPermission()) loadLibrary()
+        pod.onDataChanged()
     }
 
     private fun loadLibrary() {
         if (Library.state == Library.State.LOADING) return
         Library.state = Library.State.LOADING
-        pod.onLibraryChanged()
+        pod.onDataChanged()
         val app = applicationContext
         thread(name = "library") {
             Library.load(app)
             runOnUiThread {
                 ArtCache.clear()
                 service?.restoreState()
-                pod.onLibraryChanged()
+                pod.onDataChanged()
             }
         }
     }
 
     override fun requestLibraryAccess() {
-        if (hasAudioPermission()) {
-            loadLibrary()
-        } else if (!askedPermission || shouldShowRequestPermissionRationale(audioPermission)) {
-            askPermissions()
-        } else {
-            // Permanently denied: send the user to the app's settings page.
-            startActivity(
-                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null))
-            )
+        when {
+            hasAudioPermission() -> loadLibrary()
+            !askedAudio || shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_AUDIO) -> askAudio()
+            else -> openAppSettings()
         }
     }
 
@@ -204,11 +223,69 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
         if (hasAudioPermission()) loadLibrary() else requestLibraryAccess()
     }
 
-    // ---------------------------------------------------------------- feedback & layout
+    override fun requestContactsPermission() {
+        when {
+            hasContactsPermission -> pod.flash("Contact search is on")
+            !askedContacts || shouldShowRequestPermissionRationale(Manifest.permission.READ_CONTACTS) -> {
+                askedContacts = true
+                requestPermissions(arrayOf(Manifest.permission.READ_CONTACTS), REQ_CONTACTS)
+            }
+            else -> openAppSettings()
+        }
+    }
+
+    private fun openAppSettings() {
+        startIntent(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)), false)
+    }
+
+    override fun openNotificationAccess() {
+        val detail = Intent(Settings.ACTION_NOTIFICATION_LISTENER_DETAIL_SETTINGS)
+            .putExtra(Settings.EXTRA_NOTIFICATION_LISTENER_COMPONENT_NAME, ComponentName(this, NotifyService::class.java).flattenToString())
+        if (!startIntent(detail, quiet = true)) startIntent(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS), false)
+    }
+
+    override fun openHomeSettings() {
+        if (!startIntent(Intent(Settings.ACTION_HOME_SETTINGS), quiet = true)) {
+            startIntent(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS), false)
+        }
+    }
+
+    // ---------------------------------------------------------------- launching
+
+    override fun launch(app: AppEntry) {
+        val r = Rect()
+        pod.getGlobalVisibleRect(r)
+        if (!Apps.launch(app, r)) pod.flash("Can't open ${app.label}")
+    }
+
+    override fun startIntent(intent: Intent, quiet: Boolean): Boolean = try {
+        startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        true
+    } catch (_: ActivityNotFoundException) {
+        if (!quiet) pod.flash("No app can do that")
+        false
+    } catch (_: SecurityException) {
+        if (!quiet) pod.flash("Not allowed")
+        false
+    }
+
+    // ---------------------------------------------------------------- feedback, theme & layout
 
     override fun click() {
         if (prefs.clicker) sound.play()
         if (prefs.haptics) pod.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+    }
+
+    override fun applyTheme() {
+        pod.rebuildSkin()
+        val p = pod.skin.p
+        root.setBackgroundColor(p.bg)
+        window.decorView.setBackgroundColor(p.bg)
+        wheel.invalidate()
+        window.insetsController?.setSystemBarsAppearance(
+            if (p.dark) 0 else WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS or WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+            WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS or WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS,
+        )
     }
 
     override fun applyWheelVisibility() {
@@ -224,8 +301,10 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
     // ---------------------------------------------------------------- input
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) return super.onKeyDown(keyCode, event)
-        if (pod.onKey(keyCode, event)) {
+        if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_HOME ||
+            keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+        ) return super.onKeyDown(keyCode, event)
+        if (pod.handleKeyDown(keyCode, event)) {
             handledKeys += keyCode
             return true
         }
@@ -233,20 +312,24 @@ class MainActivity : Activity(), PodView.Host, ServiceConnection, PlaybackServic
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        if (handledKeys.remove(keyCode)) return true
+        val used = pod.handleKeyUp(keyCode, event)
+        if (handledKeys.remove(keyCode) || used) return true
         return super.onKeyUp(keyCode, event)
     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (!pod.menu()) {
-            // Keep playing in the background instead of tearing everything down.
-            moveTaskToBack(true)
-        }
+        // A launcher has nowhere to go back to: Back only walks up the menus.
+        pod.menu()
     }
 
     override fun dispatchGenericMotionEvent(ev: MotionEvent): Boolean {
         if (pod.onGenericMotion(ev)) return true
         return super.dispatchGenericMotionEvent(ev)
+    }
+
+    private companion object {
+        const val REQ_AUDIO = 1
+        const val REQ_CONTACTS = 2
     }
 }

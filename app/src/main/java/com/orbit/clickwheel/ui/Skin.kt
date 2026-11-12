@@ -3,45 +3,92 @@ package com.orbit.clickwheel.ui
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
-import android.graphics.Shader
 import android.graphics.Typeface
 import android.text.TextPaint
 import android.text.TextUtils
 
 private fun c(v: Long) = v.toInt()
 
-/** Sizes, paints and drawing helpers for the classic white-screen look. */
-class Skin(context: Context, sizeSetting: Int) {
+/** Accent colours offered in Settings. */
+object Accents {
+    val names = listOf("Blue", "Purple", "Pink", "Orange", "Green", "Graphite")
+    private val colors = listOf(0xFF0A7AFF, 0xFF9A55E6, 0xFFEE4E86, 0xFFF5900A, 0xFF2FB457, 0xFF8A8A8F)
+    fun color(i: Int) = c(colors[i.coerceIn(0, colors.lastIndex)])
+}
+
+/** Colours for one appearance (light or dark). */
+class Palette(
+    val dark: Boolean,
+    val accent: Int,
+    /** Window background; also behind the status bar. */
+    val bg: Int,
+    /** Left sidebar surface. */
+    val sidebar: Int,
+    /** Content / preview surface. */
+    val panel: Int,
+    val text: Int,
+    val secondary: Int,
+    val tertiary: Int,
+    val separator: Int,
+    val fillSoft: Int,
+    val badge: Int = c(0xFFFF3B30),
+    val onAccent: Int = Color.WHITE,
+) {
+    companion object {
+        fun light(accent: Int) = Palette(
+            dark = false, accent = accent,
+            bg = c(0xFFF2F2F5), sidebar = c(0xFFE9E9EE), panel = c(0xFFFFFFFF),
+            text = c(0xFF1D1D1F), secondary = c(0xFF6E6E73), tertiary = c(0xFFAEAEB2),
+            separator = c(0x1F000000), fillSoft = c(0x0F000000),
+        )
+
+        fun dark(accent: Int) = Palette(
+            dark = true, accent = accent,
+            bg = c(0xFF161618), sidebar = c(0xFF202023), panel = c(0xFF1C1C1E),
+            text = c(0xFFF5F5F7), secondary = c(0xFF98989D), tertiary = c(0xFF5A5A5F),
+            separator = c(0x29FFFFFF), fillSoft = c(0x14FFFFFF),
+        )
+    }
+}
+
+/** Sizes, paints and drawing helpers: a modern sidebar look with the click-wheel layout. */
+class Skin(context: Context, sizeSetting: Int, val p: Palette) {
     val dp = context.resources.displayMetrics.density
     private val scale = when (sizeSetting) {
-        0 -> 0.85f
-        2 -> 1.25f
+        0 -> 0.88f
+        2 -> 1.2f
         else -> 1f
     }
     val u = dp * scale
-    val titleH = 32 * u
-    val rowH = 42 * u
+    val rowH = 40 * u
+    val sectionH = 30 * u
+    val headerH = 48 * u
     val pad = 12 * u
-
-    val black = c(0xFF000000)
-    val white = c(0xFFFFFFFF)
-    val grey = c(0xFF6E6E73)
-    val dark = c(0xFF1C1C1E)
+    val radius = 9 * u
+    val iconSize = 22 * u
+    val statusMinH = 30 * dp
 
     private val bold = Typeface.create("sans-serif", Typeface.BOLD)
+    private val medium = Typeface.create("sans-serif-medium", Typeface.NORMAL)
     private val regular = Typeface.create("sans-serif", Typeface.NORMAL)
 
-    val rowText = text(bold, 19 * u, black)
-    val detailText = text(regular, 16 * u, grey)
-    val titleText = text(bold, 16 * u, dark)
-    val bigText = text(bold, 20 * u, black)
-    val bodyText = text(regular, 17 * u, c(0xFF3A3A3C))
-    val smallText = text(bold, 13 * u, c(0xFF3A3A3C))
-    val letterText = text(bold, 56 * u, white).apply { textAlign = Paint.Align.CENTER }
+    val rowText = text(medium, 17 * u, p.text)
+    val detailText = text(regular, 15 * u, p.secondary)
+    val sectionText = text(bold, 12.5f * u, p.secondary).apply { letterSpacing = 0.04f }
+    val headerText = text(bold, 22 * u, p.text)
+    val bigText = text(bold, 21 * u, p.text)
+    val bodyText = text(regular, 16 * u, p.text)
+    val smallText = text(medium, 13 * u, p.secondary)
+    val statusText = text(bold, 14.5f * dp, p.text)
+    val statusSmall = text(bold, 11 * dp, p.text)
+    val badgeText = text(bold, 11.5f * u, Color.WHITE).apply { textAlign = Paint.Align.CENTER }
+    val letterText = text(bold, 56 * u, Color.WHITE).apply { textAlign = Paint.Align.CENTER }
+    val hugeText = text(Typeface.create("sans-serif-light", Typeface.NORMAL), 72 * u, p.text).apply {
+        textAlign = Paint.Align.CENTER
+    }
 
     val fill = Paint(Paint.ANTI_ALIAS_FLAG)
     val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -49,15 +96,7 @@ class Skin(context: Context, sizeSetting: Int) {
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
     }
-
-    val selectionShader = LinearGradient(
-        0f, 0f, 0f, rowH,
-        intArrayOf(c(0xFF84BDF8), c(0xFF3F88EA), c(0xFF1A5CCC)), floatArrayOf(0f, 0.5f, 1f),
-        Shader.TileMode.CLAMP
-    )
-    val titleShader = LinearGradient(
-        0f, 0f, 0f, titleH, c(0xFFFDFDFD), c(0xFFC9CACF), Shader.TileMode.CLAMP
-    )
+    val bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
     private val path = Path()
     private val rect = RectF()
 
@@ -67,51 +106,99 @@ class Skin(context: Context, sizeSetting: Int) {
         this.color = color
     }
 
-    /** Baseline that vertically centres [p]'s text in a box starting at [top] of height [h]. */
-    fun baseline(p: Paint, top: Float, h: Float): Float {
-        val fm = p.fontMetrics
+    /** Baseline that vertically centres [paint]'s text in a box starting at [top] of height [h]. */
+    fun baseline(paint: Paint, top: Float, h: Float): Float {
+        val fm = paint.fontMetrics
         return top + h / 2f - (fm.ascent + fm.descent) / 2f
     }
 
-    fun ellipsize(s: String, p: TextPaint, w: Float): String =
-        if (w <= 0f) "" else TextUtils.ellipsize(s, p, w, TextUtils.TruncateAt.END).toString()
+    fun ellipsize(s: String, paint: TextPaint, w: Float): String =
+        if (w <= 0f) "" else TextUtils.ellipsize(s, paint, w, TextUtils.TruncateAt.END).toString()
 
     /**
      * Draws [s] in [maxW]. Overflowing text either ellipsizes or, when [marquee] is given, scrolls.
      * Returns true when the marquee needs further frames.
      */
-    fun fitText(canvas: Canvas, s: String, x: Float, y: Float, maxW: Float, p: TextPaint, marquee: Marquee?, now: Long): Boolean {
-        val tw = p.measureText(s)
+    fun fitText(canvas: Canvas, s: String, x: Float, y: Float, maxW: Float, paint: TextPaint, marquee: Marquee?, now: Long): Boolean {
+        val tw = paint.measureText(s)
         if (tw <= maxW) {
-            canvas.drawText(s, x, y, p)
+            canvas.drawText(s, x, y, paint)
             return false
         }
         val offset = marquee?.offset(tw, 40 * u, 45 * u, now) ?: 0f
         if (marquee == null || offset == 0f) {
-            canvas.drawText(ellipsize(s, p, maxW), x, y, p)
+            canvas.drawText(ellipsize(s, paint, maxW), x, y, paint)
             return marquee != null
         }
         canvas.save()
-        canvas.clipRect(x, y - p.textSize * 1.5f, x + maxW, y + p.textSize)
-        canvas.drawText(s, x - offset, y, p)
-        canvas.drawText(s, x - offset + tw + 40 * u, y, p)
+        canvas.clipRect(x, y - paint.textSize * 1.5f, x + maxW, y + paint.textSize)
+        canvas.drawText(s, x - offset, y, paint)
+        canvas.drawText(s, x - offset + tw + 40 * u, y, paint)
         canvas.restore()
         return true
     }
 
-    fun chevron(canvas: Canvas, rightX: Float, cy: Float, color: Int) {
-        val s = rowH * 0.15f
+    /** Rounded accent pill behind the selected row. */
+    fun selection(canvas: Canvas, l: Float, t: Float, r: Float, b: Float, color: Int = p.accent) {
+        rect.set(l, t, r, b)
+        fill.color = color
+        canvas.drawRoundRect(rect, radius, radius, fill)
+    }
+
+    fun roundRect(canvas: Canvas, l: Float, t: Float, r: Float, b: Float, rad: Float, color: Int) {
+        rect.set(l, t, r, b)
+        fill.color = color
+        canvas.drawRoundRect(rect, rad, rad, fill)
+    }
+
+    fun chevron(canvas: Canvas, rightX: Float, cy: Float, color: Int, size: Float = rowH * 0.13f) {
         stroke.color = color
-        stroke.strokeWidth = 2.6f * u
+        stroke.strokeWidth = 2.2f * u
         path.reset()
-        path.moveTo(rightX - s, cy - s * 1.25f)
+        path.moveTo(rightX - size, cy - size * 1.3f)
         path.lineTo(rightX, cy)
-        path.lineTo(rightX - s, cy + s * 1.25f)
+        path.lineTo(rightX - size, cy + size * 1.3f)
         canvas.drawPath(path, stroke)
     }
 
-    fun playIcon(canvas: Canvas, x: Float, cy: Float, size: Float, playing: Boolean) {
-        fill.shader = LinearGradient(0f, cy - size / 2, 0f, cy + size / 2, c(0xFF5AA6F5), c(0xFF1455C2), Shader.TileMode.CLAMP)
+    fun backChevron(canvas: Canvas, leftX: Float, cy: Float, color: Int) {
+        val s = headerH * 0.14f
+        stroke.color = color
+        stroke.strokeWidth = 2.8f * u
+        path.reset()
+        path.moveTo(leftX + s, cy - s * 1.4f)
+        path.lineTo(leftX, cy)
+        path.lineTo(leftX + s, cy + s * 1.4f)
+        canvas.drawPath(path, stroke)
+    }
+
+    fun check(canvas: Canvas, rightX: Float, cy: Float, color: Int) {
+        val s = rowH * 0.14f
+        stroke.color = color
+        stroke.strokeWidth = 2.6f * u
+        path.reset()
+        path.moveTo(rightX - s * 2.2f, cy)
+        path.lineTo(rightX - s * 1.3f, cy + s * 0.95f)
+        path.lineTo(rightX, cy - s * 1.0f)
+        canvas.drawPath(path, stroke)
+    }
+
+    /** Red count bubble, right-aligned at [rightX]. Returns the width used. */
+    fun badge(canvas: Canvas, rightX: Float, cy: Float, count: Int, color: Int = p.badge): Float {
+        if (count <= 0) return 0f
+        val label = if (count > 99) "99+" else count.toString()
+        val h = 19 * u
+        val w = maxOf(h, badgeText.measureText(label) + 12 * u)
+        rect.set(rightX - w, cy - h / 2, rightX, cy + h / 2)
+        fill.color = color
+        canvas.drawRoundRect(rect, h / 2, h / 2, fill)
+        badgeText.color = Color.WHITE
+        canvas.drawText(label, rect.centerX(), baseline(badgeText, rect.top, h), badgeText)
+        return w
+    }
+
+    fun playIcon(canvas: Canvas, x: Float, cy: Float, size: Float, playing: Boolean, color: Int) {
+        fill.color = color
         if (playing) {
             path.reset()
             path.moveTo(x, cy - size / 2)
@@ -121,93 +208,42 @@ class Skin(context: Context, sizeSetting: Int) {
             canvas.drawPath(path, fill)
         } else {
             val bw = size * 0.3f
-            canvas.drawRect(x, cy - size / 2, x + bw, cy + size / 2, fill)
-            canvas.drawRect(x + size * 0.55f, cy - size / 2, x + size * 0.55f + bw, cy + size / 2, fill)
-        }
-        fill.shader = null
-    }
-
-    fun battery(canvas: Canvas, rightX: Float, cy: Float, level: Int, charging: Boolean) {
-        val h = 12 * u
-        val w = 25 * u
-        val left = rightX - w - 3 * u
-        rect.set(left, cy - h / 2, left + w, cy + h / 2)
-        fill.color = c(0xFFF2F2F2)
-        canvas.drawRoundRect(rect, 2 * u, 2 * u, fill)
-        stroke.color = c(0xFF4A4A4E)
-        stroke.strokeWidth = 1.3f * u
-        canvas.drawRoundRect(rect, 2 * u, 2 * u, stroke)
-        fill.color = c(0xFF4A4A4E)
-        canvas.drawRect(rect.right, cy - h * 0.22f, rect.right + 2.5f * u, cy + h * 0.22f, fill)
-        val inset = 2 * u
-        val fw = (w - inset * 2) * level.coerceIn(0, 100) / 100f
-        val (top, bottom) = when {
-            level <= 20 && !charging -> c(0xFFFF8A80) to c(0xFFD32F2F)
-            else -> c(0xFFB9EE7E) to c(0xFF4CA51F)
-        }
-        fill.shader = LinearGradient(0f, rect.top, 0f, rect.bottom, top, bottom, Shader.TileMode.CLAMP)
-        canvas.drawRect(rect.left + inset, rect.top + inset, rect.left + inset + fw, rect.bottom - inset, fill)
-        fill.shader = null
-        if (charging) {
-            val cx = rect.centerX()
-            path.reset()
-            path.moveTo(cx + 1.5f * u, cy - h * 0.62f)
-            path.lineTo(cx - 3.5f * u, cy + 1 * u)
-            path.lineTo(cx - 0.2f * u, cy + 1 * u)
-            path.lineTo(cx - 1.5f * u, cy + h * 0.62f)
-            path.lineTo(cx + 3.5f * u, cy - 1 * u)
-            path.lineTo(cx + 0.2f * u, cy - 1 * u)
-            path.close()
-            fill.color = c(0xFFFFE14D)
-            canvas.drawPath(path, fill)
-            stroke.color = c(0xFF4A4A4E)
-            stroke.strokeWidth = 0.8f * u
-            canvas.drawPath(path, stroke)
+            rect.set(x, cy - size / 2, x + bw, cy + size / 2)
+            canvas.drawRoundRect(rect, bw * 0.3f, bw * 0.3f, fill)
+            rect.set(x + size * 0.55f, cy - size / 2, x + size * 0.55f + bw, cy + size / 2)
+            canvas.drawRoundRect(rect, bw * 0.3f, bw * 0.3f, fill)
         }
     }
 
-    /** Glossy progress / volume bar. */
+    /** Thin rounded progress / volume track. */
     fun bar(canvas: Canvas, l: Float, t: Float, r: Float, b: Float, fraction: Float) {
-        val radius = (b - t) * 0.25f
+        val rad = (b - t) / 2f
         rect.set(l, t, r, b)
-        fill.shader = LinearGradient(0f, t, 0f, b, c(0xFFF2F2F2), c(0xFFC4C4C8), Shader.TileMode.CLAMP)
-        canvas.drawRoundRect(rect, radius, radius, fill)
+        fill.color = p.fillSoft
+        canvas.drawRoundRect(rect, rad, rad, fill)
+        fill.color = p.separator
+        canvas.drawRoundRect(rect, rad, rad, fill)
         val fx = l + (r - l) * fraction.coerceIn(0f, 1f)
         if (fx > l) {
-            fill.shader = LinearGradient(
-                0f, t, 0f, b,
-                intArrayOf(c(0xFF9CCBFA), c(0xFF3F88EA), c(0xFF2364D2)), floatArrayOf(0f, 0.5f, 1f),
-                Shader.TileMode.CLAMP
-            )
-            canvas.save()
-            canvas.clipRect(l, t, fx, b)
-            canvas.drawRoundRect(rect, radius, radius, fill)
-            canvas.restore()
+            rect.set(l, t, maxOf(fx, l + rad * 2), b)
+            fill.color = p.accent
+            canvas.drawRoundRect(rect, rad, rad, fill)
         }
-        fill.shader = null
-        stroke.color = c(0xFF8A8A8E)
-        stroke.strokeWidth = 1f * u
-        canvas.drawRoundRect(rect, radius, radius, stroke)
     }
 
-    /** Diamond scrub handle. */
-    fun diamond(canvas: Canvas, cx: Float, cy: Float, s: Float) {
-        path.reset()
-        path.moveTo(cx, cy - s)
-        path.lineTo(cx + s * 0.75f, cy)
-        path.lineTo(cx, cy + s)
-        path.lineTo(cx - s * 0.75f, cy)
-        path.close()
-        fill.shader = LinearGradient(0f, cy - s, 0f, cy + s, c(0xFFFFFFFF), c(0xFFB0B0B5), Shader.TileMode.CLAMP)
-        canvas.drawPath(path, fill)
-        fill.shader = null
-        stroke.color = c(0xFF4A4A4E)
-        stroke.strokeWidth = 1.2f * u
-        canvas.drawPath(path, stroke)
+    /** Round scrub handle. */
+    fun knob(canvas: Canvas, cx: Float, cy: Float, r: Float) {
+        fill.color = c(0x33000000)
+        canvas.drawCircle(cx, cy + 0.8f * u, r, fill)
+        fill.color = Color.WHITE
+        canvas.drawCircle(cx, cy, r, fill)
+        stroke.color = p.accent
+        stroke.strokeWidth = 2f * u
+        canvas.drawCircle(cx, cy, r - 1f * u, stroke)
     }
 
     fun speaker(canvas: Canvas, x: Float, cy: Float, s: Float, waves: Int) {
-        fill.color = c(0xFF4A4A4E)
+        fill.color = p.secondary
         path.reset()
         path.moveTo(x, cy - s * 0.3f)
         path.lineTo(x + s * 0.3f, cy - s * 0.3f)
@@ -217,13 +253,19 @@ class Skin(context: Context, sizeSetting: Int) {
         path.lineTo(x, cy + s * 0.3f)
         path.close()
         canvas.drawPath(path, fill)
-        stroke.color = c(0xFF4A4A4E)
+        stroke.color = p.secondary
         stroke.strokeWidth = 1.4f * u
         for (i in 1..waves) {
             val r = s * (0.35f + 0.3f * i)
             rect.set(x + s * 0.5f - r, cy - r, x + s * 0.5f + r, cy + r)
             canvas.drawArc(rect, -40f, 80f, false, stroke)
         }
+    }
+
+    fun hairline(canvas: Canvas, x1: Float, y1: Float, x2: Float, y2: Float) {
+        stroke.color = p.separator
+        stroke.strokeWidth = maxOf(1f, 0.7f * dp)
+        canvas.drawLine(x1, y1, x2, y2, stroke)
     }
 }
 
@@ -237,10 +279,6 @@ class Marquee {
             key = newKey
             since = now
         }
-    }
-
-    fun restart(now: Long) {
-        since = now
     }
 
     fun offset(textW: Float, gap: Float, speedPxPerSec: Float, now: Long): Float {

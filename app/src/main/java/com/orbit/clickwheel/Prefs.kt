@@ -42,6 +42,24 @@ class Prefs(context: Context) {
         get() = sp.getInt("text_size", 1)
         set(v) = sp.edit().putInt("text_size", v).apply()
 
+    /** 0 = follow system, 1 = light, 2 = dark */
+    var theme: Int
+        get() = sp.getInt("theme", 0)
+        set(v) = sp.edit().putInt("theme", v).apply()
+
+    /** Index into [com.orbit.clickwheel.ui.Accents]. */
+    var accent: Int
+        get() = sp.getInt("accent", 0)
+        set(v) = sp.edit().putInt("accent", v).apply()
+
+    var hiddenApps: Set<String>
+        get() = sp.getStringSet("hidden_apps", emptySet())!!.toSet()
+        set(v) = sp.edit().putStringSet("hidden_apps", v.toSet()).apply()
+
+    var sidebarJson: String?
+        get() = sp.getString("sidebar", null)
+        set(v) = sp.edit().putString("sidebar", v).apply()
+
     val sensitivityMultiplier: Float
         get() = when (sensitivity) {
             0 -> 0.55f

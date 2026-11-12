@@ -49,15 +49,18 @@ class ClickWheelView(context: Context, private val pod: PodView) : View(context)
     }
 
     override fun onDraw(canvas: Canvas) {
-        canvas.drawColor(0xFF1C1C1E.toInt())
-        paint.shader = LinearGradient(0f, cy - outer, 0f, cy + outer, 0xFFF7F7F8.toInt(), 0xFFD4D5D9.toInt(), Shader.TileMode.CLAMP)
+        val p = pod.skin.p
+        canvas.drawColor(p.bg)
+        val (top, bottom) = if (p.dark) 0xFF2E2E31.toInt() to 0xFF1F1F22.toInt() else 0xFFFFFFFF.toInt() to 0xFFE4E4E9.toInt()
+        paint.shader = LinearGradient(0f, cy - outer, 0f, cy + outer, top, bottom, Shader.TileMode.CLAMP)
         canvas.drawCircle(cx, cy, outer, paint)
-        paint.shader = RadialGradient(cx, cy, inner, 0xFFE7E8EB.toInt(), 0xFFC9CACF.toInt(), Shader.TileMode.CLAMP)
+        paint.shader = RadialGradient(cx, cy, inner, p.bg, if (p.dark) 0xFF111113.toInt() else 0xFFE9E9EE.toInt(), Shader.TileMode.CLAMP)
         canvas.drawCircle(cx, cy, inner, paint)
         paint.shader = null
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = 1f * dp
-        paint.color = 0xFFB0B1B6.toInt()
+        paint.color = p.separator
+        label.color = p.secondary
         canvas.drawCircle(cx, cy, inner, paint)
         canvas.drawCircle(cx, cy, outer, paint)
         paint.style = Paint.Style.FILL
