@@ -123,7 +123,8 @@ class SearchScreen(pod: PodView, initial: String) : MenuScreen(pod, "Search", em
             out += rows
         }
 
-        Calculator.evaluate(q)?.let { v ->
+        val calc = Calculator.evaluate(q)
+        calc?.let { v ->
             val result = Calculator.format(v)
             section("Calculator", listOf(MenuItem("= $result", detail = "Copy", chevron = false, icon = symCalc, key = "calc") {
                 val cm = pod.context.getSystemService(ClipboardManager::class.java)
@@ -132,7 +133,7 @@ class SearchScreen(pod: PodView, initial: String) : MenuScreen(pod, "Search", em
             }))
         }
 
-        if (q.length >= 3 && q.all { it.isDigit() || it in "+ ()-#*" } && q.count { it.isDigit() } >= 3) {
+        if (calc == null && q.length >= 3 && q.all { it.isDigit() || it in "+ ()-#*" } && q.count { it.isDigit() } >= 3) {
             section("Phone", listOf(MenuItem("Call $q", chevron = false, icon = symCall, key = "dial") {
                 pod.startIntent(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(q))))
             }))

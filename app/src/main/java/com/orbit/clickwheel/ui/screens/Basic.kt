@@ -219,3 +219,47 @@ class TextScreen(pod: PodView, override val title: String, private val body: Str
         c.restore()
     }
 }
+
+/** Shows every input event as it arrives, to check how the keyboard's touch surface reports swipes. */
+class InputTestScreen(pod: PodView) : Screen(pod) {
+    override val title = "Input Test"
+    override val headerDetail: String get() = "wheel ${if (ticks >= 0) "+" else ""}$ticks"
+    override val capturesText = true
+    private val lines = ArrayDeque<String>()
+    private var ticks = 0
+
+    override fun onResume() {
+        pod.inputLog = { msg ->
+            lines.addFirst(msg)
+            while (lines.size > 40) lines.removeLast()
+            pod.invalidate()
+        }
+    }
+
+    override fun onLeave() {
+        pod.inputLog = null
+    }
+
+    override fun onWheel(ticks: Int) {
+        this.ticks += ticks
+        pod.click()
+    }
+
+    /** Swallow every key so it can be inspected; Esc, Back or tapping the title leaves. */
+    override fun onKey(keyCode: Int, event: KeyEvent): Boolean = keyCode != KeyEvent.KEYCODE_ESCAPE
+
+    override fun draw(c: Canvas, w: Int, h: Int, now: Long) {
+        val s = pod.skin
+        var y = s.pad
+        s.smallText.color = s.p.secondary
+        c.drawText("Swipe the keyboard, press keys, touch the screen. Esc or Back to leave.", s.pad, y + s.smallText.textSize, s.smallText)
+        y += s.rowH * 0.9f
+        s.smallText.color = s.p.text
+        for (line in lines) {
+            if (y > h - s.pad) break
+            c.drawText(s.ellipsize(line, s.smallText, w - s.pad * 2), s.pad, y + s.smallText.textSize, s.smallText)
+            y += s.smallText.textSize * 1.6f
+        }
+        s.smallText.color = s.p.secondary
+    }
+}

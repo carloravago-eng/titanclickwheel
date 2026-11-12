@@ -13,6 +13,7 @@ import com.orbit.clickwheel.notify.NotifyStore
 import com.orbit.clickwheel.ui.screens.Action
 import com.orbit.clickwheel.ui.screens.AppPickerScreen
 import com.orbit.clickwheel.ui.screens.ClockScreen
+import com.orbit.clickwheel.ui.screens.InputTestScreen
 import com.orbit.clickwheel.ui.screens.MenuItem
 import com.orbit.clickwheel.ui.screens.MenuScreen
 import com.orbit.clickwheel.ui.screens.NotesScreen
@@ -149,7 +150,7 @@ object Menus {
     fun searchPlaces(pod: PodView, q: String): List<MenuItem> = pod.sidebar.entries.mapNotNull { e ->
         when (e) {
             is SideEntry.Item -> if (e.kind.label.lowercase().contains(q) && e.kind != Builtin.SEARCH) {
-                MenuItem(e.kind.label, icon = symbol(e.kind), key = "place:" + e.id) { openBuiltin(pod, e.kind) }
+                MenuItem(e.kind.label, detail = "ClickWheel", icon = symbol(e.kind), key = "place:" + e.id) { openBuiltin(pod, e.kind) }
             } else null
             is SideEntry.Folder -> if (e.name.lowercase().contains(q)) {
                 MenuItem(e.name, detail = "Folder", icon = symFolder, key = "place:" + e.id) { pod.push(folder(pod, e)) }
@@ -287,6 +288,8 @@ object Menus {
                     pod.showNowPlaying()
                 } else if (Library.state == Library.State.NEEDS_PERMISSION) {
                     pod.requestLibraryAccess()
+                } else if (songs.isEmpty()) {
+                    pod.flash(if (Library.state == Library.State.LOADING) "Still loading your music\u2026" else "No songs found")
                 }
             },
             MenuItem("Playlists", icon = symPlaylist, key = "playlists") { pod.push(playlists(pod)) },
@@ -407,6 +410,7 @@ object Menus {
             },
 
             MenuItem("Help", header = true),
+            MenuItem("Input Test", key = "input-test") { pod.push(InputTestScreen(pod)) },
             MenuItem("Controls", key = "controls") { pod.push(TextScreen(pod, "Controls", CONTROLS)) },
             MenuItem("About", key = "about") { pod.push(TextScreen(pod, "About", ABOUT)) },
         )

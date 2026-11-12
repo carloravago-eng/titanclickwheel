@@ -9,6 +9,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.graphics.RectF
 import android.os.SystemClock
+import android.util.Log
 import android.view.InputDevice
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -116,6 +117,32 @@ class PodView(context: Context, private val host: Host) : View(context) {
             if (sheet == null && y >= 0) top.onLongTap(downX, y)
             invalidate()
         }
+    }
+
+    /** Receives a description of every input event while the Input Test screen is open. */
+    var inputLog: ((String) -> Unit)? = null
+
+    private fun logInput(msg: String) {
+        Log.d("ClickWheel.Input", msg)
+        inputLog?.invoke(msg)
+    }
+
+    private fun sourceName(src: Int): String = listOf(
+        InputDevice.SOURCE_TOUCHSCREEN to "touchscreen", InputDevice.SOURCE_MOUSE to "mouse",
+        InputDevice.SOURCE_TOUCHPAD to "touchpad", InputDevice.SOURCE_MOUSE_RELATIVE to "mouse-relative",
+        InputDevice.SOURCE_TRACKBALL to "trackball", InputDevice.SOURCE_ROTARY_ENCODER to "rotary",
+        InputDevice.SOURCE_KEYBOARD to "keyboard", InputDevice.SOURCE_DPAD to "dpad",
+        InputDevice.SOURCE_JOYSTICK to "joystick", InputDevice.SOURCE_STYLUS to "stylus",
+    ).filter { (bits, _) -> src and bits == bits }.joinToString("+") { it.second }.ifEmpty { "0x" + Integer.toHexString(src) }
+
+    private fun describe(ev: MotionEvent): String {
+        val dev = ev.device
+        return "${MotionEvent.actionToString(ev.actionMasked)} ${sourceName(ev.source)} " +
+            "v=%.2f h=%.2f s=%.2f x=%.0f y=%.0f dev=%s%s".format(
+                ev.getAxisValue(MotionEvent.AXIS_VSCROLL), ev.getAxisValue(MotionEvent.AXIS_HSCROLL),
+                ev.getAxisValue(MotionEvent.AXIS_SCROLL), ev.x, ev.y, dev?.name ?: ev.deviceId.toString(),
+                if (dev?.isVirtual == true) " (virtual)" else "",
+            )
     }
 
     private val frameTick = Runnable { invalidate() }
@@ -348,6 +375,12 @@ class PodView(context: Context, private val host: Host) : View(context) {
 
     /** Returns true when the key was used. */
     fun handleKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        logInput(
+            "key ${KeyEvent.keyCodeToString(keyCode)} rep=${event.repeatCount}" +
+                (if (event.unicodeChar != 0) " char='${String(Character.toChars(event.unicodeChar))}'" else "") +
+                (if (event.isAltPressed) " alt" else "") + (if (event.isShiftPressed) " shift" else "") +
+                " dev=${event.device?.name ?: event.deviceId}"
+        )
         if (keyCode == KeyEvent.KEYCODE_ALT_LEFT || keyCode == KeyEvent.KEYCODE_ALT_RIGHT) {
             altHeld = true
             return false
@@ -418,11 +451,18 @@ class PodView(context: Context, private val host: Host) : View(context) {
     // ---------------------------------------------------------------- touch-keyboard / touchpad / mouse
 
     fun onGenericMotion(ev: MotionEvent): Boolean {
+        if (ev.actionMasked != MotionEvent.ACTION_HOVER_MOVE) logInput("motion " + describe(ev))
         if (ev.actionMasked == MotionEvent.ACTION_SCROLL) {
             val v = ev.getAxisValue(MotionEvent.AXIS_VSCROLL)
             val hz = ev.getAxisValue(MotionEvent.AXIS_HSCROLL)
+            // Rotary encoders (and some scroll helpers) report AXIS_SCROLL instead.
+            val r = ev.getAxisValue(MotionEvent.AXIS_SCROLL)
             // Scrolling "down" (negative VSCROLL) moves the selection down the list.
-            val d = if (abs(v) >= abs(hz)) -v else hz
+            val d = when {
+                v != 0f && abs(v) >= abs(hz) -> -v
+                hz != 0f -> hz
+                else -> -r
+            }
             if (d != 0f) feed(d)
             return true
         }
@@ -457,6 +497,7 @@ class PodView(context: Context, private val host: Host) : View(context) {
     override fun onTouchEvent(e: MotionEvent): Boolean {
         when (e.actionMasked) {
             MotionEvent.ACTION_DOWN -> {
+                logInput("touch " + describe(e))
                 downX = e.x
                 downY = e.y
                 lastY = e.y
@@ -488,6 +529,7 @@ class PodView(context: Context, private val host: Host) : View(context) {
                 }
             }
             MotionEvent.ACTION_UP -> {
+                logInput("touch up dx=%.0f dy=%.0f drag=%b".format(e.x - downX, e.y - downY, dragging))
                 removeCallbacks(longPress)
                 when {
                     longPressed -> {}
