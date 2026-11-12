@@ -1,19 +1,16 @@
 #!/usr/bin/env bash
 # Drives ClickWheel on an emulator and saves screenshots to ./shots.
-# Usage: scripts/screenshots.sh path/to/app.apk
+# Usage: scripts/screenshots.sh path/to/app-debug.apk
 set -u
 APK="$1"
 OUT="shots"
 PKG="com.orbit.clickwheel"
 mkdir -p "$OUT"
+exec > >(tee "$OUT/script.log") 2>&1
 
-shot() { sleep "${2:-2}"; adb exec-out screencap -p > "$OUT/$1.png"; echo "shot $1"; }
+shot() { sleep "${2:-2}"; adb exec-out screencap -p > "$OUT/$1.png"; echo "== shot $1"; }
 key() { adb shell input keyevent "$@"; sleep 0.6; }
-scroll() { # scroll N ticks: positive = down
-  local n=$1 v=-1
-  if [ "$n" -lt 0 ]; then v=1; n=$(( -n )); fi
-  for _ in $(seq "$n"); do adb shell input mouse scroll 700 700 --axis "VSCROLL,$v"; sleep 0.35; done
-}
+down() { for _ in $(seq "$1"); do adb shell input keyevent DPAD_DOWN; sleep 0.25; done; sleep 0.4; }
 type_text() { adb shell input text "$1"; sleep 0.8; }
 
 # Titan 2 Elite-like square screen.
@@ -22,7 +19,8 @@ adb shell wm density 480
 adb shell settings put system screen_off_timeout 1800000
 adb shell svc power stayon true
 
-# Test music with tags and cover art.
+# Test music with tags and cover art. Copied with the shell's cp so it goes through
+# Android's storage layer and gets indexed (adb push alone bypasses the media scanner).
 if command -v ffmpeg >/dev/null; then
   mkdir -p music
   i=0
@@ -35,8 +33,14 @@ if command -v ffmpeg >/dev/null; then
       -id3v2_version 3 -metadata title="$title" -metadata artist="$artist" -metadata album="$album" \
       -metadata track="$i" -disposition:v attached_pic "music/$i.mp3" || true
   done
-  adb shell mkdir -p /sdcard/Music
-  adb push music/. /sdcard/Music/ || true
+  adb shell mkdir -p /data/local/tmp/music /sdcard/Music
+  adb push music/. /data/local/tmp/music/
+  adb shell 'cp /data/local/tmp/music/*.mp3 /sdcard/Music/'
+  for f in music/*.mp3; do
+    adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file:///sdcard/Music/$(basename "$f")" >/dev/null || true
+  done
+  sleep 5
+  adb shell content query --uri content://media/external/audio/media --projection title:artist || true
 fi
 
 adb install -r -g "$APK"
@@ -49,10 +53,14 @@ adb shell cmd notification allow_listener "$PKG/$PKG.notify.NotifyService" || tr
 
 # A test contact.
 adb shell content insert --uri content://com.android.contacts/raw_contacts --bind account_type:s:local --bind account_name:s:local || true
-adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:1 \
-  --bind mimetype:s:vnd.android.cursor.item/name --bind data1:s:'Sam Rivera' || true
-adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:1 \
-  --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:5551234567 --bind data2:i:2 || true
+RAW=$(adb shell content query --uri content://com.android.contacts/raw_contacts --projection _id | grep -o '_id=[0-9]*' | tail -1 | cut -d= -f2)
+echo "raw contact id: $RAW"
+if [ -n "$RAW" ]; then
+  adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:"$RAW" \
+    --bind mimetype:s:vnd.android.cursor.item/name --bind data1:s:"Sam\ Rivera" || true
+  adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:"$RAW" \
+    --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:5551234567 --bind data2:i:2 || true
+fi
 
 # Some notifications.
 adb shell cmd notification post -S bigtext -t "Sam Rivera" msg1 "Are we still on for dinner at 7?" || true
@@ -60,19 +68,18 @@ adb shell cmd notification post -S bigtext -t "Build passed" ci1 "ClickWheel APK
 
 adb shell cmd uimode night no
 key HOME
-sleep 4
+sleep 5
 shot 01-home-light 3
 
-scroll 3
+# Sidebar: Music, Now Playing, Search, Extras, All Apps, Notifications, Settings.
+down 3
 shot 02-sidebar-extras-preview
-
-scroll 2
+down 2
 shot 03-sidebar-notifications-preview
 key ENTER
 shot 04-notifications
 key ESCAPE
-
-scroll -1
+key DPAD_UP
 key ENTER
 shot 05-all-apps
 adb shell input keyevent --longpress ENTER
@@ -88,12 +95,11 @@ type_text "12\*4"
 shot 08-search-calculator
 key DEL DEL DEL DEL
 type_text "sam"
-shot 09-search-contact
+shot 09-search-contact 3
 key HOME
 
-# Music: Music > Shuffle Songs.
+# Music > Shuffle Songs.
 key HOME
-scroll -6
 key ENTER
 shot 10-music-menu
 key ENTER
@@ -101,28 +107,53 @@ shot 11-now-playing 3
 key HOME
 shot 12-home-now-playing-preview
 
+# Extras > Clock.
 key HOME
-scroll 3
+down 3
 key ENTER
+shot 13-extras
 key ENTER
-shot 13-clock
+shot 14-clock
+
+# Settings, then the Input Test with every kind of emulated scroll.
+key HOME
+down 6
+key ENTER
+shot 15-settings
+down 17
+key ENTER
+sleep 1
+adb shell input mouse scroll 700 700 --axis VSCROLL,-1 || echo "mouse scroll failed"
+sleep 0.5
+adb shell input scroll 700 700 --axis SCROLL,-1 || echo "rotary scroll failed"
+sleep 0.5
+adb shell input trackball roll 0 3 || echo "trackball failed"
+sleep 0.5
+adb shell input swipe 700 1000 700 600 300 || echo "swipe failed"
+sleep 0.5
+adb shell input keyevent DPAD_DOWN
+shot 16-input-test
+key ESCAPE
+key HOME
 
 adb shell cmd uimode night yes
 key HOME
-scroll -6
-shot 14-home-dark 3
+shot 17-home-dark 3
 key ENTER
 key ENTER
-shot 15-now-playing-dark 3
+shot 18-now-playing-dark 3
 
 # Camera cutout emulation, to check the status bar stays clear of it.
 for cut in hole corner; do
   adb shell cmd overlay enable "com.android.internal.display.cutout.emulation.$cut" || true
+  sleep 4
+  adb shell dumpsys window displays | grep -i -m3 cutout || true
   key HOME
-  shot "16-cutout-$cut" 4
+  shot "19-cutout-$cut" 4
   adb shell cmd overlay disable "com.android.internal.display.cutout.emulation.$cut" || true
 done
 
 adb logcat -d -b crash > "$OUT/crash-log.txt" || true
-adb logcat -d | grep -iE "clickwheel|AndroidRuntime" | tail -300 > "$OUT/logcat.txt" || true
+adb logcat -d -s ClickWheel.Input:D | tail -200 > "$OUT/input-log.txt" || true
+adb logcat -d | grep -iE "clickwheel|AndroidRuntime" | grep -v AppsFilter | tail -300 > "$OUT/logcat.txt" || true
 ls -la "$OUT"
