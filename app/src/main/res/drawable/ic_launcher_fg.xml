@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A stylised click wheel: outer ring, centre button and the four labels. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FF3A3A3C"
+        android:pathData="M54,24a30,30 0,1 1,0 60a30,30 0,1 1,0 -60z M54,43a11,11 0,1 0,0 22a11,11 0,1 0,0 -22z"
+        android:fillType="evenOdd" />
+    <path
+        android:fillColor="#FFE9EAEE"
+        android:pathData="M47,30h2.2l1.6,4 1.6,-4h2.2v6h-1.6v-3.6l-1.5,3.6h-1.4l-1.5,-3.6v3.6h-1.6z" />
+    <path
+        android:fillColor="#FFE9EAEE"
+        android:pathData="M73,50l5,4 -5,4z M78.4,50h1.6v8h-1.6z" />
+    <path
+        android:fillColor="#FFE9EAEE"
+        android:pathData="M35,50l-5,4 5,4z M28,50h1.6v8h-1.6z" />
+    <path
+        android:fillColor="#FFE9EAEE"
+        android:pathData="M49,74l5,3.2 -5,3.2z M56,74h1.6v6.4h-1.6z M58.8,74h1.6v6.4h-1.6z" />
+</vector>
