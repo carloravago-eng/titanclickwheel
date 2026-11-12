@@ -79,3 +79,15 @@ jobs:
         with:
           name: screenshots
           path: shots/
+      - name: Publish screenshots to the ci-screenshots branch
+        if: always()
+        run: |
+          [ -d shots ] || exit 0
+          cd shots
+          git init -q -b ci-screenshots
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "Screenshots from ${GITHUB_REF_NAME} @ ${GITHUB_SHA}" > README.md
+          git add -A
+          git commit -q -m "Screenshots for ${GITHUB_REF_NAME} ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" ci-screenshots
