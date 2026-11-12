@@ -30,9 +30,9 @@ if command -v ffmpeg >/dev/null; then
     IFS='|' read -r title artist album color <<< "$spec"
     i=$((i + 1))
     ffmpeg -loglevel error -y -f lavfi -i "sine=frequency=$((300 + i * 80)):duration=200" \
-      -f lavfi -i "color=c=${color}:s=600x600" -frames:v 1 -map 0:a -map 1:v -c:a libmp3lame -b:a 64k \
-      -id3v2_version 3 -metadata title="$title" -metadata artist="$artist" -metadata album="$album" \
-      -metadata track="$i" -c:v png -disposition:v attached_pic "music/${title// /_}.mp3" || true
+      -c:a libmp3lame -b:a 96k -ar 44100 -id3v2_version 3 \
+      -metadata title="$title" -metadata artist="$artist" -metadata album="$album" -metadata track="$i" \
+      "music/${title// /_}.mp3" || true
   done
   adb shell mkdir -p /data/local/tmp/music /sdcard/Music
   adb push music/. /data/local/tmp/music/
@@ -41,7 +41,7 @@ if command -v ffmpeg >/dev/null; then
     adb shell am broadcast -a android.intent.action.MEDIA_SCANNER_SCAN_FILE -d "file:///sdcard/Music/$(basename "$f")" >/dev/null || true
   done
   sleep 5
-  adb shell content query --uri content://media/external/audio/media --projection title:artist || true
+  adb shell content query --uri content://media/external/audio/media --projection title:artist:album:is_music:is_pending:duration:mime_type || true
 fi
 
 adb install -r -g "$APK"

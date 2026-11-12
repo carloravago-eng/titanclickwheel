@@ -75,10 +75,9 @@ object Library {
             MediaStore.Audio.Media.TRACK,
             MediaStore.Audio.Media.DISPLAY_NAME,
         )
-        try {
+        fun scan(selection: String) {
             context.contentResolver.query(
-                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
-                "${MediaStore.Audio.Media.IS_MUSIC} != 0", null, null
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection, selection, null, null
             )?.use { c ->
                 val iId = c.getColumnIndex(projection[0])
                 val iTitle = c.getColumnIndex(projection[1])
@@ -107,6 +106,18 @@ object Library {
                         disc = track / 1000,
                     )
                 }
+            }
+        }
+        try {
+            scan("${MediaStore.Audio.Media.IS_MUSIC} != 0")
+            if (list.isEmpty()) {
+                // Some files (downloads, untagged rips) never get the "music" flag: fall back to
+                // every audio file that isn't a ringtone, notification or alarm (or recording).
+                val recording = if (android.os.Build.VERSION.SDK_INT >= 31) " AND ${MediaStore.Audio.Media.IS_RECORDING} = 0" else ""
+                scan(
+                    "${MediaStore.Audio.Media.IS_RINGTONE} = 0 AND ${MediaStore.Audio.Media.IS_NOTIFICATION} = 0 AND " +
+                        "${MediaStore.Audio.Media.IS_ALARM} = 0$recording"
+                )
             }
         } catch (e: SecurityException) {
             android.util.Log.w("ClickWheel", "Library: no permission", e)
