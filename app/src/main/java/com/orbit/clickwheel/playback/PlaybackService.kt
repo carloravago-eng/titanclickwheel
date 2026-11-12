@@ -248,6 +248,7 @@ class PlaybackService : Service(),
     }
 
     fun shuffleAll(tracks: List<Track>) {
+        Log.i(TAG, "shuffleAll ${tracks.size}")
         if (tracks.isEmpty()) return
         prefs.shuffle = true
         original = ArrayList(tracks)

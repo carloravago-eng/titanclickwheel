@@ -108,9 +108,12 @@ object Library {
                     )
                 }
             }
-        } catch (_: SecurityException) {
+        } catch (e: SecurityException) {
+            android.util.Log.w("ClickWheel", "Library: no permission", e)
             state = State.NEEDS_PERMISSION
             return
+        } catch (e: Exception) {
+            android.util.Log.e("ClickWheel", "Library query failed", e)
         }
 
         val albumOrder = compareBy<Track>({ it.disc }, { it.trackNo }, { it.sortKey })
@@ -141,6 +144,7 @@ object Library {
         byId = list.associateBy { it.id }
         playlists = loadPlaylists(context)
         state = State.READY
+        android.util.Log.i("ClickWheel", "Library loaded: ${list.size} songs, ${albumList.size} albums, ${artistList.size} artists")
     }
 
     @Suppress("DEPRECATION")

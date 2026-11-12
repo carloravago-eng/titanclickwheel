@@ -283,6 +283,8 @@ object Menus {
             MenuItem("Shuffle Songs", chevron = false, icon = symShuffle, key = "shuffle") {
                 val songs = Library.songs
                 val svc = pod.service
+                android.util.Log.i("ClickWheel", "Shuffle Songs: ${songs.size} songs, state=${Library.state}, service=${svc != null}")
+                if (songs.isNotEmpty() && svc == null) pod.flash("Music service is starting, try again")
                 if (songs.isNotEmpty() && svc != null) {
                     svc.shuffleAll(songs)
                     pod.showNowPlaying()

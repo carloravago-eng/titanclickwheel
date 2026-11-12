@@ -105,7 +105,8 @@ top
 key ENTER
 shot 10-music-menu
 key ENTER
-shot 11-now-playing 3
+shot 11a-after-shuffle 0.8
+shot 11-now-playing 2
 key HOME
 shot 12-home-now-playing-preview
 
@@ -160,5 +161,6 @@ done
 
 adb logcat -d -b crash > "$OUT/crash-log.txt" || true
 adb logcat -d -s ClickWheel.Input:D | tail -200 > "$OUT/input-log.txt" || true
-adb logcat -d | grep -iE "clickwheel|AndroidRuntime" | grep -v AppsFilter | tail -300 > "$OUT/logcat.txt" || true
+adb logcat -d | grep -iE "clickwheel|AndroidRuntime|PlaybackService|MediaPlayer" | grep -v AppsFilter | tail -400 > "$OUT/logcat.txt" || true
+adb shell dumpsys media_session > "$OUT/media-session.txt" || true
 ls -la "$OUT"
