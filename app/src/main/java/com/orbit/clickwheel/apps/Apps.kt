@@ -103,6 +103,18 @@ object Apps {
 
     fun byPackage(pkg: String): AppEntry? = all.firstOrNull { it.packageName == pkg }
 
+    private val labels = HashMap<String, String>()
+
+    /** A readable name for any package, including ones without a launcher icon (system services). */
+    fun labelFor(context: Context, pkg: String): String = byPackage(pkg)?.label ?: labels.getOrPut(pkg) {
+        try {
+            val pm = context.packageManager
+            pm.getApplicationLabel(pm.getApplicationInfo(pkg, 0)).toString()
+        } catch (_: Exception) {
+            pkg
+        }
+    }
+
     fun visible(hidden: Set<String>): List<AppEntry> = all.filter { it.key !in hidden }
 
     fun launch(app: AppEntry, bounds: Rect? = null): Boolean = try {

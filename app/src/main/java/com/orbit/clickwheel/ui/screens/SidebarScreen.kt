@@ -14,9 +14,12 @@ import com.orbit.clickwheel.playback.MediaHub
 import com.orbit.clickwheel.ui.AppIcon
 import com.orbit.clickwheel.ui.Menus
 import com.orbit.clickwheel.ui.PodView
+import com.orbit.clickwheel.ui.Sym
 import java.util.Date
 import kotlin.math.max
 import kotlin.math.min
+
+private val bellSym = Sym(com.orbit.clickwheel.R.drawable.sym_bell)
 
 /**
  * The home screen: an editable sidebar on the left and, on wide screens, a preview of the
@@ -190,10 +193,11 @@ class SidebarScreen(pod: PodView) : MenuScreen(pod, "Home", build = { Menus.side
             s.roundRect(c, l, y, r, y + cardH, s.radius * 1.4f, s.p.fillSoft)
             val app = Apps.byPackage(n.packageName)
             val icon = s.iconSize
-            app?.let { AppIcon(it).draw(c, l + s.pad * 0.7f, y + s.pad * 0.6f, icon, 0, pod) }
+            if (app != null) AppIcon(app).draw(c, l + s.pad * 0.7f, y + s.pad * 0.6f, icon, 0, pod)
+            else bellSym.draw(c, l + s.pad * 0.7f, y + s.pad * 0.6f, icon, s.p.accent, pod)
             val tx = l + s.pad * 0.7f + icon + s.pad * 0.6f
             s.smallText.color = s.p.secondary
-            c.drawText(s.ellipsize(app?.label ?: n.packageName, s.smallText, r - tx - s.pad), tx, y + s.pad * 0.6f + icon * 0.72f, s.smallText)
+            c.drawText(s.ellipsize(Apps.labelFor(pod.context, n.packageName), s.smallText, r - tx - s.pad), tx, y + s.pad * 0.6f + icon * 0.72f, s.smallText)
             s.rowText.color = s.p.text
             c.drawText(s.ellipsize(n.title, s.rowText, r - l - s.pad * 1.4f), l + s.pad * 0.7f, y + cardH * 0.66f, s.rowText)
             s.detailText.color = s.p.secondary

@@ -12,6 +12,7 @@ shot() { sleep "${2:-2}"; adb exec-out screencap -p > "$OUT/$1.png"; echo "== sh
 key() { adb shell input keyevent "$@"; sleep 0.6; }
 down() { for _ in $(seq "$1"); do adb shell input keyevent DPAD_DOWN; sleep 0.25; done; sleep 0.4; }
 type_text() { adb shell input text "$1"; sleep 0.8; }
+top() { for _ in $(seq 10); do adb shell input keyevent DPAD_UP; done; sleep 0.5; }
 
 # Titan 2 Elite-like square screen.
 adb shell wm size 1440x1440
@@ -31,7 +32,7 @@ if command -v ffmpeg >/dev/null; then
     ffmpeg -loglevel error -y -f lavfi -i "sine=frequency=$((300 + i * 80)):duration=200" \
       -f lavfi -i "color=c=${color}:s=600x600" -frames:v 1 -map 0:a -map 1:v -c:a libmp3lame -b:a 64k \
       -id3v2_version 3 -metadata title="$title" -metadata artist="$artist" -metadata album="$album" \
-      -metadata track="$i" -disposition:v attached_pic "music/$i.mp3" || true
+      -metadata track="$i" -c:v png -disposition:v attached_pic "music/${title// /_}.mp3" || true
   done
   adb shell mkdir -p /data/local/tmp/music /sdcard/Music
   adb push music/. /data/local/tmp/music/
@@ -63,8 +64,8 @@ if [ -n "$RAW" ]; then
 fi
 
 # Some notifications.
-adb shell cmd notification post -S bigtext -t "Sam Rivera" msg1 "Are we still on for dinner at 7?" || true
-adb shell cmd notification post -S bigtext -t "Build passed" ci1 "ClickWheel APK built successfully" || true
+adb shell "cmd notification post -S bigtext -t 'Sam Rivera' msg1 'Are we still on for dinner at 7?'" || true
+adb shell "cmd notification post -S bigtext -t 'Build passed' ci1 'ClickWheel APK built successfully'" || true
 
 adb shell cmd uimode night no
 key HOME
@@ -100,6 +101,7 @@ key HOME
 
 # Music > Shuffle Songs.
 key HOME
+top
 key ENTER
 shot 10-music-menu
 key ENTER
@@ -109,6 +111,7 @@ shot 12-home-now-playing-preview
 
 # Extras > Clock.
 key HOME
+top
 down 3
 key ENTER
 shot 13-extras
@@ -117,6 +120,7 @@ shot 14-clock
 
 # Settings, then the Input Test with every kind of emulated scroll.
 key HOME
+top
 down 6
 key ENTER
 shot 15-settings
@@ -138,6 +142,7 @@ key HOME
 
 adb shell cmd uimode night yes
 key HOME
+top
 shot 17-home-dark 3
 key ENTER
 key ENTER
