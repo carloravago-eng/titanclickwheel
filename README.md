@@ -42,9 +42,21 @@ On phones without a hardware keyboard an on-screen click wheel appears automatic
 
 ## Building
 
-GitHub Actions builds the APKs on every push. Download them from the
-run's **clickwheel-apk** artifact. The release APK is signed with the debug key so you can sideload
-it directly.
+GitHub Actions builds the APK on every push. Each build on `main` is published as a release, so
+the newest APK is always at:
+
+**https://github.com/carloravago-eng/titanclickwheel/releases/latest/download/ClickWheel.apk**
+
+Open that link on the phone and tap the download to install. Every build is also kept under
+[Releases](https://github.com/carloravago-eng/titanclickwheel/releases). 
+To make every new build install over the last one (keeping your settings), give CI a fixed signing
+key. Add two repository secrets under *Settings → Secrets and variables → Actions*:
+
+- `CLICKWHEEL_KEYSTORE_BASE64`: a keystore with key alias `clickwheel`, base64-encoded
+- `CLICKWHEEL_KEYSTORE_PASSWORD`: its password (used for both the store and the key)
+
+Without them, builds are signed with a temporary debug key, so installing a newer build means
+uninstalling the old one first.
 
 Locally, with the Android SDK installed:
 

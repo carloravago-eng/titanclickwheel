@@ -147,7 +147,7 @@ object Menus {
     """.trimIndent()
 
     private val ABOUT = """
-        ClickWheel 1.0
+        ClickWheel
 
         A music player with a classic click-wheel interface, built for keyboard phones such as the Unihertz Titan 2 Elite.
 
